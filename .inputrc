@@ -10,7 +10,6 @@ set keymap vi
 
 set keymap vi-insert
 "jk": vi-movement-mode
-# bind '"jk":vi-movement-mode' # old; doesn't work; did work in .bashrc
 
 # change ctrl+backspace to delete prev alphanum word
 # needs to be after vi-stuff
