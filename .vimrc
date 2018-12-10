@@ -10,9 +10,12 @@
 "   vim-fugitive
 "   fzf plugin (fzf now installed, also learn it)
 "
-" misc
-"   dotfiles on my git
-"       see https://stackoverflow.com/a/4220493/5537652
+" want:
+"   semicolon to switch or open buffer for file
+"       search from current directory? or no?
+"   other command to search Tags..?
+"   hm.. https://statico.github.io/vim3.html
+
 
 
 
@@ -46,6 +49,8 @@ Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 
 
