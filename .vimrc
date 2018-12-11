@@ -23,11 +23,7 @@
 
 
 " ### VUNDLE ###
-set nocompatible  " required
-"
-" Enable syntax highlighting
-" You need to reload this file for the change to apply
-
+set nocompatible  " required for vundle
 filetype off " required for vundle
 
 " set the runtime path to include Vundle and initialize
@@ -71,7 +67,8 @@ syntax on
 " ### END VUNDLE ###
 
 
-" mapleader to comma. important to have at top
+" ### PLUGIN SETTINGS ###
+" map leader to comma. important to have at top
 let mapleader=","
 
 " nice other format stuff
@@ -120,6 +117,7 @@ nnoremap <leader>a :Ag<CR>
 
 " gitgutter
 set updatetime=100 " update faster
+
 
 " ### CONNOR MISC SETTINGS ###
 set background=dark
@@ -173,21 +171,20 @@ set foldlevel=99
 " Fast save
 nnoremap <Leader>w :w<CR>
 set scrolloff=3
-
-" experimental stuff here!
-
 "tab matches bracket pairs
 nnoremap <tab> %
 vnoremap <tab> %
-
 " this is good.
 nnoremap ; :
+" ipdb shortcut
+nnoremap <leader>p oimport ipdb; ipdb.set_trace()<Esc>
+
+" experimental stuff here!
+
 
 " needs ssh testing
 set ttyfast
 
-" ipdb shortcut. maybe doesn't work
-inoremap <leader>pdb import ipdb; ipdb.set_trace()
 
 " write to read-only file with :w!!
 cmap w!! w !sudo tee > /dev/null %
