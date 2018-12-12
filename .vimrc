@@ -18,6 +18,8 @@
 "       search from current directory? or no?
 "   switch and manage buffers nicely
 "   see syntax errors highlighted
+"   auto imports
+"   go to super() classdef
 
 
 
@@ -55,6 +57,9 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tomasr/molokai' " bad
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'altercation/vim-colors-solarized' " kinda lame
+Plugin 'morhetz/gruvbox'
+Plugin 'junegunn/seoul256.vim'
+Plugin 'Lokaltog/vim-distinguished'
 
 
 
@@ -84,10 +89,12 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 colorscheme PaperColor
 
-" youcompleteme settings
+" youcompleteme
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" python with virtualenv support
+" unmap this for certain files
+autocmd FileType help   unmap <buffer> <C-]>
+" ycm virtualenv python support
 py << EOF
 import os
 import sys
@@ -96,17 +103,21 @@ if 'VIRTUAL_ENV' in os.environ:
   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
   execfile(activate_this, dict(__file__=activate_this))
 EOF
+let g:ycm_filetype_blacklist = {
+            \ 'txt': 1,
+            \ 'help': 1}
 
 " syntastic
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let b:syntastic_mode='passive'
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 " do syntax check with leader-c
 nnoremap <leader>cc :SyntasticCheck<CR>
 nnoremap <leader>cr :SyntasticReset<CR>
+let b:syntastic_mode='passive'
 let python_highlight_all=1
 
 " fzf stuff
@@ -168,8 +179,6 @@ set fo-=t   " don't automatically wrap text when typing - not sure if useful
 noremap <space> za
 set foldmethod=indent
 set foldlevel=99
-" Fast save
-nnoremap <Leader>w :w<CR>
 set scrolloff=3
 "tab matches bracket pairs
 nnoremap <tab> %
@@ -178,6 +187,7 @@ vnoremap <tab> %
 nnoremap ; :
 " ipdb shortcut
 nnoremap <leader>p oimport ipdb; ipdb.set_trace()<Esc>
+set laststatus=2
 
 " experimental stuff here!
 

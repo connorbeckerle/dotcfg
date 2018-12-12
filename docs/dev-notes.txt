@@ -1,0 +1,205 @@
+linux tips
+    count lines in file
+        wc -l <file>
+    sudo !! - repeat prev command
+    ctrl+a - go to start of line
+    replacing #012 in dhcp msg: cat misc-connor/real-msg-raw.txt | sed 's/\#012/\n/g'
+
+fzf
+    CTRL-T - Paste the selected files and directories onto the command-line
+        Set FZF_CTRL_T_COMMAND to override the default command
+        Set FZF_CTRL_T_OPTS to pass additional options
+    CTRL-R - Paste the selected command from history onto the command-line
+        If you want to see the commands in chronological order, press CTRL-R again which toggles sorting by relevance
+        Set FZF_CTRL_R_OPTS to pass additional options
+    ALT-C - cd into the selected directory
+        Set FZF_ALT_C_COMMAND to override the default command
+        Set FZF_ALT_C_OPTS to pass additional options
+
+grep
+    in continuous pipes (e.g. tail -f) - doesn't work due to buffering
+        instead of: cmd | grep 'asfd'
+        use: cmd | stdbuf -oL grep 'asdf' (line-buffered)
+        or -o0 for no buffering
+        or 'grep --line-buffered'
+
+sed
+    to replace (substitute): sed 's/MATCHREGEX/REPLACE WITH/OPTION'
+        'g' option is global (not first on line)
+
+curl
+    -X: method (all caps)
+        GET, PUT, etc
+    -d: data (string)
+        if you use a @before a filename it will read the file
+    -H: headers
+        "accept: application/json" - not sure what this does
+    e.g.:
+        $ curl -X POST "http://localhost:8000/orderprovisioning/" -H "accept: application/json" -H "Content-Type: application/json" -d @~/temp-cwb-0831-proc.json 
+        this doesn't seem to work for some reason...
+
+vim
+    save readonly file:
+        :w !sudo tee % 
+    moving tabs
+        :tabm <absolute position>
+        :tabm <+/-> <relative position>
+
+adapter list
+    docsis
+    dhcp
+    ip tracking
+    oss static ip
+    sipcred
+
+useful libraries
+    tds
+        bxe-order-data
+        bxe-orderprovisioning
+            has unit and integration testing.
+
+flask shell
+    $ 'flask shell'
+    ctx = app.test_request_context()
+    ctx.push()
+    app.preprocess_request()
+    ... easier at least for dhcp adapter is to set up ipdb breakpoint in an endpoint..
+
+couchbase/N1QL
+    escape everything with backticks if it is confused
+        e.g. select * from `docsis_state` where `94877cb18562` is missing
+    "is missing" "is null" etc are useful
+    querying on partial doc_id match:
+        select meta(ossstatic_data).id, * 
+        from `ossstatic_data`
+        where  contains(meta(ossstatic_data).id, "142D27C13C83")
+
+restview
+    workon misc, restview <path-to-file>
+
+DHCP server
+    helpful setup on gitlab
+    to start things:
+        kea: $ sudo keactrl start
+    to see if kea is running: $ ps auxf | grep kea
+
+testing framework
+    NOTE - sip cred and OSS Static (maybe?) are NORTH. use the --north flag!
+    documentation here: https://git.ent.tds.net/BxE/bxe-order-provisioning/blob/master/TESTING.md
+        sometimes have to specify host or port (for static ip adapter, port = whatever)
+    running integration tests:
+        example command:
+            bxe-order-test --hook bxe_oss_static_ip_adapter.order_testing --port 8003 --north run-chain
+            (port is port of the server)
+        can also be run from pycharm, if you use module name = bxe_orderprovisioning.test.test_harness
+        note - to get debugging, in line 64 of bxe_orderprovisioning/test/hooks.py, change to:
+            ret_val = filtered_call(self.function, kwargs) (from similar line)
+    notes on creating orders:
+        see this for an example: https://git.ent.tds.net/BxE/bxe-dhcp-adapter/blob/develop/tests/hosts/test_bxe_dhcp_adapter_DnO.py#L246
+            (but note that it adds them to the whole library list)
+        bg: @orders creates a literal python function (lol) with an attribute for orders. so to change orders, change that after the fact
+        to modify the orders list for a particular test function, put a line under it like:
+            "test_something.orders.orders = [<list of orders>]"
+            or += probably
+        can also generate orders with the generate_orders function from the lib
+    troubleshooting for errors in run-chain:
+        do normal run-chain
+        if it breaks, filter on one that breaks, e.g.:
+            bxe-order-test --port 8002 -vf -tb run-chain --filter data.cancelled_install
+        this gives debug output
+
+Django stuff
+    migrations - had to roll back migration as far as possible, then set to be in previous migration
+        state it was stuck on, then unmigrate the rest of the way, then run new migration
+        EXAMPLE:
+            ./manage.py migrate bxe_ip_tracking_adapter zero (hits irreversible error)
+            ./manage.py migrate bxe_ip_tracking_adapter [back one from where stopped] --fake
+            ./manage.py migrate bxe_ip_tracking_adapter zero
+            ./manage.py migrate bxe_ip_tracking_adapter
+    testing criteriasearch/swagger 
+        go to localhost:8000/swagger
+        done :)
+    logging sql queries
+        insert 'django.db.backends' logger :)
+    sql query datetimes - just pass literal python datetime obj into even raw query string
+
+
+docsis hooks
+    make clean/make to test
+    try to test in some program that uses them
+    have Chris test
+    sometimes have to remove hooks from config to restart server to fix bad shutdown
+
+pytest stuff
+    use pytest.set_trace()
+        don't need -s or anything
+    useful opts
+        -k <match> to select only partially matching tests
+        -s to disable i/o capture and use debugging
+        -rap to display a summary
+    to debug on breakpoint, add:
+        --pdb --pdbcls=IPython.terminal.debugger:Pdb
+
+cassandra/cqlsh
+    flush hosts: 
+        truncate kea.host_reservations;
+
+git guide
+    https://wiki.tds.net/display/WEBMOB/TDS+Guide+to+Git+and+GitLab
+
+    config/aliases
+        $ git config -e --global
+    my aliases
+        cleanup
+        prettygraph
+    find common ancestor:
+        $ git merge-base branch1 branch2
+    pull from remote:
+        $ git checkout --track origin/branch-name
+    reset 1 file to branch:
+        $ git checkout HEAD -- <file>
+
+    basics:
+        rebase:
+            $ git rebase <branch>
+                where branch is the new base for current branch
+        new branch:
+            $ git checkout -b <name>
+        change branch:
+            $ git checkout <name>
+            this just switches branch w/ nothing else
+        commit:
+            $ git commit -F <commit log file>
+            commits to current branch
+        push remote (new branch to upstream):
+            $ git push -u origin <branch name>
+            pushes it to remote repo
+        Branch naming: 
+            feature/BXE-####_short-feature-name
+    
+python general
+    circular imports..
+        https://gist.github.com/datagrok/40bf84d5870c41a77dc6
+    to start debugger on breakpoint:
+        python -m pdb -c continue myscript.py
+
+SQL
+    show table names:
+        select table_name from user_tables;
+
+useful config general:
+    git cleanup merged branches https://stackoverflow.com/a/21857717/5537652
+    git autocomplete checkout local only https://stackoverflow.com/a/18626043/5537652
+
+
+some misc thoughts:
+    logging
+        exception catches should always log the stack trace if not expected
+        logs in general should have some sort of request/order/worker/etc identifier
+        logs should have the most pertinent info at code branches (entry/exit points 
+            and if/else/etc statements). not rapid-fire ones in random places
+        
+
+TODO eventually:
+    read this: https://wiki.tds.net/display/BPEBDE/Light+Reading+to+Jumpstart+DOCSIS+understanding
+

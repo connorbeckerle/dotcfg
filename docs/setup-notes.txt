@@ -1,0 +1,138 @@
+reboot tasks...
+    oracle
+        rlsql / as sysdba <<< 'startup'
+        lsnrctl start (takes a minute)
+    couchbase
+        sudo systemctl start docker
+        sudo docker start db
+    rabbit
+        sudo /sbin/service rabbitmq-server start
+    kea/cassandra - TO DO - UPDATE
+        # sudo -u postgres -i
+        # postgres -D /var/lib/pgsql/data > logfile 2>&1 &
+        # (ctrl+d to exit postgres)
+        # sudo keactrl start
+        sudo systemctl start kea-dhcp4
+        sudo service cassandra start (if cassandra does not start on startup) 
+        sudo kea-ctrl-agent -c /opt/kea/etc/kea/kea-ctrl-agent.conf (if not started)
+    redshift
+        redshift -O 3500
+        redshift -O 6500 is default value
+
+fixing monitors
+    xrandr -q shows status
+    if 2nd display doesn't show up... try replugging kvm
+    if it doesn't choose right display..
+        https://wiki.archlinux.org/index.php/xrandr#Adding_undetected_resolutions
+        example:
+        xrandr --newmode "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+        xrandr --addmode DP-3 1920x1080_60.00
+        xrandr --output DP-3 --mode 1920x1080_60.00
+
+kibana
+    ex query: component_name:docsis_adapter AND LOGCATEGORY:OUT AND NOT STATUS:COMPLETE AND  COMPONENTPAYLOAD:"*state mismatch*"
+    in general, booleans need to be capitalized, parens needed if ambig
+
+new proj setup guide
+    make a dir in ~/programming, go into it
+    git clone, go into that
+    mkvirtualenv <name>
+    setvirtualenvproject
+    fix pip
+        install 9.0.1
+        get the pip.conf from the other virtualenv
+    pip install reqs
+    git checkout --track origin/develop
+    make new pycharm proj in the base folder for the proj
+    set proj interpreter as ~/.virtualenvs/<proj env>/bin/python (all versions are the same)
+        (easier to do after making the proj with the base interpreter)
+
+
+### resources
+yum 
+    yum list installed - what it says
+        can also take param
+    ulyaoth repo failed so I disabled it with $ yum-config-manager --disable ulyaoth
+
+rpm
+    output all installed packages: $ rpm -qa
+
+couchbase
+    install:
+        $ sudo docker run -t --name db -p 8091-8094:8091-8094 -p 11210:11210 couchbase/sandbox:5.0.0-beta
+    start up:
+        (if docker not started): sudo systemctl start docker
+        sudo docker start db
+    credentials:
+        localhost:8091
+        Administrator/password
+    notes:
+        console is (in browser) localhost:8091
+        apparently couchbase v5 needs a username and password. I need to set password in run configs manually
+    more info here:
+        https://git.ent.tds.net/BxE/tds-snap-collector/wikis/home
+    error like "keyerror getting self._path2confmods[path]" caused by "bxe_couchbase_utility.exceptions.BadCfEngineConf: cluster config file malformed: data of type <class 'str'>:"
+        this is caused by couchbase creds in :::: format, when they should be in yaml format
+
+virtualenvwrapper
+    https://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html
+    to set project home - setvirtualenvproject in dir
+
+pycharm
+    when making new proj in pycharm:
+        have to manually create new proj from file (which works fine)
+        then have to add ~/.virtualenvs/<env name>/bin/python to project interpreter.
+
+pip
+    certif issues:
+        right now, just add to trustedhost (edit pip conf)
+        later, use Sauls' method - copy TDS CAs to {virtual_env}/lib/python3.5/site-packages/pip/_vendor/certifi/cacert.pem (but has to be done for each virtualenv)
+    pip.conf locations:
+        ... see the docs... doing it all in virtualenv
+        $VIRTUAL_ENV/pip.conf
+        https://pip.pypa.io/en/stable/user_guide/#config-file
+    'no module named pip.req':
+        use 9.0.1 (pip install pip==9.0.1)
+    not hitting tds pip repos - check pipconf ($ pip config list), and/or restart (check virtualenv too)
+    installing from local dir - pip install -e <dir>
+
+oracle
+    db password: password1 unless noted
+    "port 5500 in use" installation error - add ip/hostname to /etc/hosts?
+    url: https://localhost:5500/em (needs flash or something)
+    logon: rlsql orcl as sysdba
+    connection string for ip tracking adapter: 'oracle://django:password@localhost:1522/orcl'
+
+local logging
+    in /etc/rsyslog.conf, change the line that looks like this to:
+        *.debug;mail.none;authpriv.none;cron.none                /var/log/messages
+    logs go to /var/log/messages
+
+IT helpdesk at TDS
+    608-821-9966, then hit 1, then 4, then 1
+    from side of windows machine
+
+rabbitmq
+    sudo /sbin/service rabbitmq-server start
+    sudo /sbin/service rabbitmq-server stop
+    management plugin:
+        rabbitmq-plugins enable rabbitmq_management
+        localhost:15672 guest/guest
+
+cassandra
+    service cassandra start/stop/etc
+    cqlsh (cli)
+
+xrdp stuff
+    to connect to existing desktop:
+        run vnc:
+            x11vnc -noxdamage -display :0 -safer -nopw -once -xrandr
+        change settings:
+            sudo vim /etc/xrdp/xrdp.ini
+            line 163 - set port=5901
+
+keyboard remap for context key
+    helpful answer here: https://askubuntu.com/a/234681/902540
+
+windownow
+    ini setup file at ~/.windowNow.ini. remove to reset hotkey
