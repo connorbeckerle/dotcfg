@@ -93,7 +93,7 @@ colorscheme PaperColor
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " unmap this for certain files
-autocmd FileType help   unmap <buffer> <C-]>
+autocmd FileType help   noremap <buffer> <C-]> <C-]>
 " ycm virtualenv python support
 py << EOF
 import os
