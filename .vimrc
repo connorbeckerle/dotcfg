@@ -52,6 +52,7 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-repeat'
+"Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
 
 " color themes
 Plugin 'tomasr/molokai' " bad
@@ -83,9 +84,9 @@ au BufNewFile,BufRead *.js, *.html, *.css
     \ set shiftwidth=2
 set autoindent
 
-" highlight extra whitespace
-highlight BadWhitespace ctermbg=red guibg=red
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+" highlight extra whitespace - disabling for now. should be caught by linter
+"highlight BadWhitespace ctermbg=red guibg=red
+"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 colorscheme PaperColor
 
@@ -108,17 +109,22 @@ let g:ycm_filetype_blacklist = {
             \ 'help': 1}
 
 " syntastic
-set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-" do syntax check with leader-c
-nnoremap <leader>cc :SyntasticCheck<CR>
-nnoremap <leader>cr :SyntasticReset<CR>
-let b:syntastic_mode='passive'
-let python_highlight_all=1
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+"" do syntax check with leader-c
+"nnoremap <leader>cc :SyntasticCheck<CR>
+"nnoremap <leader>cr :SyntasticReset<CR>
+"let b:syntastic_mode='passive'
+"let g:python_highlight_all=1
+"let g:python_space_error_highlight=0
+"let python_highlight_space_error=0 " for plugin I guess
+
+" commentary
+nmap <C-_> gcc
+vmap <C-_> gc
 
 " fzf stuff
 nnoremap <leader>b :Buffers<CR>
@@ -131,6 +137,7 @@ set updatetime=100 " update faster
 
 
 " ### CONNOR MISC SETTINGS ###
+inoremap jk <esc>
 set background=dark
 set encoding=utf-8
 set hidden " closing buffers often hides them instead of closing them
@@ -139,20 +146,22 @@ set hidden " closing buffers often hides them instead of closing them
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>
 " show colnum in status
-set statusline+=col:%c
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set pastetoggle=<F3> " f3 to toggle paste mode
 set number relativenumber " good line numbers
 " edit vimrc with ev, reload with source
 nnoremap <leader>ev :e ~/.vimrc<CR>
 " refresh vimrc
 nnoremap <leader>lv :source ~/.vimrc<CR>
+" Bind nohl - removes highlight of your last search
+noremap <leader>d :nohl<CR>
+vnoremap <leader>d :nohl<CR>
+" ipdb shortcut
+nnoremap <leader>p Oimport ipdb; ipdb.set_trace()<Esc>
+" open terminal
+nnoremap <leader>t :terminal<CR>
 " Y yanks to end of line like it should
 noremap Y y$
-" Avoid escape
-inoremap jk <esc>
-" Bind nohl - removes highlight of your last search
-noremap <Leader>d :nohl<CR>
-vnoremap <Leader>d :nohl<CR>
 " Useful settings
 set history=700
 set undolevels=700
@@ -180,13 +189,8 @@ noremap <space> za
 set foldmethod=indent
 set foldlevel=99
 set scrolloff=3
-"tab matches bracket pairs
-nnoremap <tab> %
-vnoremap <tab> %
 " this is good.
 nnoremap ; :
-" ipdb shortcut
-nnoremap <leader>p oimport ipdb; ipdb.set_trace()<Esc>
 set laststatus=2
 
 " experimental stuff here!

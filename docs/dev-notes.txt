@@ -1,3 +1,37 @@
+vim
+    save readonly file:
+        :w !sudo tee % 
+    moving tabs
+        :tabm <absolute position>
+        :tabm <+/-> <relative position>
+    fzf
+        search in..
+            ,b: Buffers
+            ,f: Files
+            ,s: Lines (in open buffers)
+            ,a: Ag
+        do..
+            ctrl-t: new tab
+            ctrl-x: new split
+            ctrl-v: new vsplit
+    windows
+        ctrl hkjl 
+            moves b/w panes
+        ctrl-w = 
+            resize to equal size
+        ctrl-w o
+            minimize all other windows
+    misc
+        ctrl-G
+            show position
+        ctrl-6
+            previous file
+        
+    setup as ide/fix plugins - deferred for later, using pycharm now
+    has links to read sometime bored http://www.cse.psu.edu/~deh25/cmpsc311/Instructions/vi.html
+    swap esc/caps: https://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc
+        (did $ setxkbmap -option caps:escape)
+
 linux tips
     count lines in file
         wc -l <file>
@@ -37,26 +71,6 @@ curl
     e.g.:
         $ curl -X POST "http://localhost:8000/orderprovisioning/" -H "accept: application/json" -H "Content-Type: application/json" -d @~/temp-cwb-0831-proc.json 
         this doesn't seem to work for some reason...
-
-vim
-    save readonly file:
-        :w !sudo tee % 
-    moving tabs
-        :tabm <absolute position>
-        :tabm <+/-> <relative position>
-
-adapter list
-    docsis
-    dhcp
-    ip tracking
-    oss static ip
-    sipcred
-
-useful libraries
-    tds
-        bxe-order-data
-        bxe-orderprovisioning
-            has unit and integration testing.
 
 flask shell
     $ 'flask shell'
@@ -108,43 +122,7 @@ testing framework
             bxe-order-test --port 8002 -vf -tb run-chain --filter data.cancelled_install
         this gives debug output
 
-Django stuff
-    migrations - had to roll back migration as far as possible, then set to be in previous migration
-        state it was stuck on, then unmigrate the rest of the way, then run new migration
-        EXAMPLE:
-            ./manage.py migrate bxe_ip_tracking_adapter zero (hits irreversible error)
-            ./manage.py migrate bxe_ip_tracking_adapter [back one from where stopped] --fake
-            ./manage.py migrate bxe_ip_tracking_adapter zero
-            ./manage.py migrate bxe_ip_tracking_adapter
-    testing criteriasearch/swagger 
-        go to localhost:8000/swagger
-        done :)
-    logging sql queries
-        insert 'django.db.backends' logger :)
-    sql query datetimes - just pass literal python datetime obj into even raw query string
-
-
-docsis hooks
-    make clean/make to test
-    try to test in some program that uses them
-    have Chris test
-    sometimes have to remove hooks from config to restart server to fix bad shutdown
-
-pytest stuff
-    use pytest.set_trace()
-        don't need -s or anything
-    useful opts
-        -k <match> to select only partially matching tests
-        -s to disable i/o capture and use debugging
-        -rap to display a summary
-    to debug on breakpoint, add:
-        --pdb --pdbcls=IPython.terminal.debugger:Pdb
-
-cassandra/cqlsh
-    flush hosts: 
-        truncate kea.host_reservations;
-
-git guide
+it guide
     https://wiki.tds.net/display/WEBMOB/TDS+Guide+to+Git+and+GitLab
 
     config/aliases
@@ -198,8 +176,4 @@ some misc thoughts:
         logs in general should have some sort of request/order/worker/etc identifier
         logs should have the most pertinent info at code branches (entry/exit points 
             and if/else/etc statements). not rapid-fire ones in random places
-        
-
-TODO eventually:
-    read this: https://wiki.tds.net/display/BPEBDE/Light+Reading+to+Jumpstart+DOCSIS+understanding
 
