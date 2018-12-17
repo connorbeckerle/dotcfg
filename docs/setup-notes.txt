@@ -103,6 +103,9 @@ oracle
     logon: rlsql orcl as sysdba
     connection string for ip tracking adapter: 'oracle://django:password@localhost:1522/orcl'
 
+sqldeveloper
+    https://ask.fedoraproject.org/en/question/63456/sqldeveloper-gives-error-after-giving-it-jdk-path/
+
 local logging
     in /etc/rsyslog.conf, change the line that looks like this to:
         *.debug;mail.none;authpriv.none;cron.none                /var/log/messages

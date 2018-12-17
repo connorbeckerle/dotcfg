@@ -57,6 +57,7 @@ export PATH=$PATH:/opt/kea/sbin
 
 # required for fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+bind -x '"\C-e": fzf-file-widget'
 
 # required thing for ~/.dotcfg file
 alias config='/usr/bin/git --git-dir=/home/usryzd/.dotcfg/ --work-tree=/home/usryzd'

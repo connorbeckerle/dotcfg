@@ -39,13 +39,13 @@ Plugin 'VundleVim/Vundle.vim'
 
 " PLUGINS GO HERE
 " NOTE: !!!! don't forget to run :PluginInstall after adding new one
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'Konfekt/FastFold'
-Plugin 'vim-scripts/indentpython.vim'
+"Plugin 'tmhedberg/SimpylFold'
+" Plugin 'Konfekt/FastFold'
+" Plugin 'vim-scripts/indentpython.vim'
 Bundle 'Valloric/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'nvie/vim-flake8'
-Plugin 'scrooloose/nerdtree'
+" Plugin 'vim-syntastic/syntastic'
+" Plugin 'nvie/vim-flake8'
+" Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
@@ -137,6 +137,7 @@ set updatetime=100 " update faster
 
 
 " ### CONNOR MISC SETTINGS ###
+" mappings
 inoremap jk <esc>
 set background=dark
 set encoding=utf-8
@@ -157,7 +158,8 @@ nnoremap <leader>lv :source ~/.vimrc<CR>
 noremap <leader>d :nohl<CR>
 vnoremap <leader>d :nohl<CR>
 " ipdb shortcut
-nnoremap <leader>p Oimport ipdb; ipdb.set_trace()<Esc>
+nnoremap <leader>pdb Oimport ipdb; ipdb.set_trace()<Esc>
+nnoremap <leader>pyt Oimport pytest; pytest.set_trace()<Esc>
 " open terminal
 nnoremap <leader>t :terminal<CR>
 " Y yanks to end of line like it should
@@ -191,12 +193,17 @@ set foldlevel=99
 set scrolloff=3
 " this is good.
 nnoremap ; :
+" makes statusbar permanent even for 1 window
 set laststatus=2
+" bd (buffer kill normally) will now restore previous buffer to that window
+cnoremap bd bp<bar>vsp<bar>bn<bar>bd
+" ,y copies text to clipboard
+vnoremap <leader>y :w !xclip -i -sel c<CR><CR>
 
 " experimental stuff here!
 
 
-" needs ssh testing
+" needs ssh testing but prob good
 set ttyfast
 
 
