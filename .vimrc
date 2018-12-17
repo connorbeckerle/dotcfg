@@ -196,7 +196,8 @@ nnoremap ; :
 " makes statusbar permanent even for 1 window
 set laststatus=2
 " bd (buffer kill normally) will now restore previous buffer to that window
-cnoremap bd bp<bar>vsp<bar>bn<bar>bd
+" WORSE version cnoremap bd bp<bar>vsp<bar>bn<bar>bd
+cnoremap bd b#<bar>bd# 
 " ,y copies text to clipboard
 vnoremap <leader>y :w !xclip -i -sel c<CR><CR>
 
