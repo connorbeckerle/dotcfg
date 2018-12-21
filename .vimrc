@@ -53,6 +53,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-repeat'
 "Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
+Plugin 'hdima/python-syntax'
 
 " color themes
 Plugin 'tomasr/molokai' " bad
@@ -88,6 +89,11 @@ set autoindent
 "highlight BadWhitespace ctermbg=red guibg=red
 "au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
+
+let g:PaperColor_Theme_Options = {
+  \   'language': {
+  \     'python': {
+  \       'highlight_builtins' : 1},}}
 colorscheme PaperColor
 
 " youcompleteme
