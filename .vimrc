@@ -4,30 +4,38 @@
 " also http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 "
 " plugins to try installing/using
-"   powerline
+"   -- high priority -- 
 "   vim-fugitive
-"   ag/silver searcher..?
-"   nerdtree
-"   syntastic (?) / flake8 (?)
-"   vim-expand-region (+ and _ as hotkeys)
-"   switch capslock, lctrl - http://wiki.c2.com/?RemapCapsLock
+"   ale with flake8 and/or others...? prospector
+"   ag/silver searcher - make better - use with ripgrep?
+"
+"   -- low priority -- 
+"   powerline
 "   splitjoin https://github.com/AndrewRadev/splitjoin.vim
+"   nerdtree
+"   Plugin 'tmhedberg/SimpylFold'
+"   Plugin 'Konfekt/FastFold'
 "
 " features I want:
 "   semicolon to switch or open buffer for file
 "       search from current directory? or no?
 "   switch and manage buffers nicely
-"   see syntax errors highlighted
-"   auto imports
-"   go to super() classdef
-"   see current class/function def (e.g. go to def of current scope)
-"   gotodefinition work with decorators :(
+"       done ish
+"   syntax/style/other error highlighting
+"       syntastic
+"       ALE - better than syntastic I think. is async
+"   show function signature when invoking
+"   auto imports with something
+"   ycm gotodefinition work with super() classdef
+"   ycm gotodefinition work with decorators :(
+"   see current class/function def (e.g. go to def of current scope) (or show
+"       at bottom)
 
 
 
 
 " ### VUNDLE ###
-set nocompatible  " required for vundle
+set nocompatible  " required for vundle (not compatible with.. vi?)
 filetype off " required for vundle
 
 " set the runtime path to include Vundle and initialize
@@ -41,11 +49,9 @@ Plugin 'VundleVim/Vundle.vim'
 
 " PLUGINS GO HERE
 " NOTE: !!!! don't forget to run :PluginInstall after adding new one
-"Plugin 'tmhedberg/SimpylFold'
-" Plugin 'Konfekt/FastFold'
-" Plugin 'vim-scripts/indentpython.vim'
 Bundle 'Valloric/YouCompleteMe'
-" Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'w0rp/ale'
 " Plugin 'nvie/vim-flake8'
 " Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-expand-region'
@@ -56,6 +62,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-repeat'
 "Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
 Plugin 'hdima/python-syntax'
+Plugin 'ZoomWin'
 
 " color themes
 Plugin 'tomasr/molokai' " bad
