@@ -21,6 +21,8 @@ vim
             resize to equal size
         ctrl-w o
             minimize all other windows
+        :bd
+            kills buffer, restores last one
     misc
         ctrl-G
             show position
@@ -29,6 +31,8 @@ vim
         @@
             repeat macro
         find matches: :%s/pattern//ng
+        reload all buffers:
+            checkt
         
     setup as ide/fix plugins - deferred for later, using pycharm now
     has links to read sometime bored http://www.cse.psu.edu/~deh25/cmpsc311/Instructions/vi.html
@@ -133,7 +137,7 @@ testing framework
             bxe-order-test --port 8002 -vf -tb run-chain --filter data.cancelled_install
         this gives debug output
 
-it guide
+git guide
     https://wiki.tds.net/display/WEBMOB/TDS+Guide+to+Git+and+GitLab
 
     config/aliases
@@ -174,9 +178,14 @@ python general
     to start debugger on breakpoint:
         python -m pdb -c continue myscript.py
 
+nice python things
+    bumpversion
+
+
 SQL
     show table names:
         select table_name from user_tables;
+    describe table;
 
 useful config general:
     git cleanup merged branches https://stackoverflow.com/a/21857717/5537652
@@ -202,3 +211,13 @@ tmux
     prefix n/p - next/prev window
     prefix C-a (double prefix) - most recent window
     prefix hkjl - select pane
+
+ssh
+    agent stuff
+        useful resources: 
+            https://unix.stackexchange.com/a/90869/306944
+            http://rabexc.org/posts/pitfalls-of-ssh-agents
+    source ~/.bash_profile to restart keychain which takes care of everything
+
+conf files
+    use $ config to manage commands

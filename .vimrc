@@ -20,6 +20,8 @@
 "   see syntax errors highlighted
 "   auto imports
 "   go to super() classdef
+"   see current class/function def (e.g. go to def of current scope)
+"   gotodefinition work with decorators :(
 
 
 
@@ -204,8 +206,10 @@ set laststatus=2
 " bd (buffer kill normally) will now restore previous buffer to that window
 " WORSE version cnoremap bd bp<bar>vsp<bar>bn<bar>bd
 cnoremap bd b#<bar>bd# 
-" ,y copies text to clipboard
-vnoremap <leader>y :w !xclip -i -sel c<CR><CR>
+" ,c copies text to clipboard
+vnoremap <leader>c :w !xclip -i -sel c<CR><CR>
+" changes to current buffer's dir. -bar says you can concatenate commands with a |
+command! -bar CurrDir cd %:p:h 
 
 " experimental stuff here!
 
