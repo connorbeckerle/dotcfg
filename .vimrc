@@ -67,10 +67,11 @@ Plugin 'ZoomWin'
 " color themes
 Plugin 'tomasr/molokai' " bad
 Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'altercation/vim-colors-solarized' " kinda lame
-Plugin 'morhetz/gruvbox'
-Plugin 'junegunn/seoul256.vim'
-Plugin 'Lokaltog/vim-distinguished'
+Plugin 'chriskempson/base16-vim'
+" Plugin 'altercation/vim-colors-solarized' " kinda lame
+" Plugin 'morhetz/gruvbox'
+" Plugin 'junegunn/seoul256.vim'
+" Plugin 'Lokaltog/vim-distinguished'
 
 
 
@@ -84,6 +85,12 @@ syntax on
 
 
 " ### PLUGIN SETTINGS ###
+
+let g:ale_linters_explicit = 1
+" let g:ale_linters = {
+"             \    'python': ['flake8']
+"             \}
+
 " map leader to comma. important to have at top
 let mapleader=","
 
@@ -152,6 +159,15 @@ set updatetime=100 " update faster
 
 
 " ### CONNOR MISC SETTINGS ###
+" TEMPORARY: try to fix this vim terminal in tmux. actually this can just be
+" deleted
+" if &term =~ '256color'
+"       " disable Background Color Erase (BCE) so that color schemes
+"       "   " render properly when inside 256-color tmux and GNU screen.
+"       "     " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+"             set t_ut=
+"             endif
+
 " mappings
 inoremap jk <esc>
 set background=dark
@@ -193,6 +209,7 @@ set incsearch
 set ignorecase
 set smartcase
 set showmatch " matching brackets flash
+set matchtime=1 " for only 0.1s
 " very magic mode for searching. most things need to be escaped. questionable
 nnoremap / /\v
 set backspace=2 " better backspacing - go over lines etc
@@ -217,12 +234,12 @@ cnoremap bd b#<bar>bd#
 vnoremap <leader>c :w !xclip -i -sel c<CR><CR>
 " changes to current buffer's dir. -bar says you can concatenate commands with a |
 command! -bar CurrDir cd %:p:h 
+" assumes fast thing to make more responsive
+set ttyfast
 
 " experimental stuff here!
 
 
-" needs ssh testing but prob good
-set ttyfast
 
 
 " write to read-only file with :w!!
@@ -244,11 +261,13 @@ set splitbelow
 set splitright
 
 " bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
-" Every unnecessary keystroke that can be saved is good for your health :)
-map <c-h> <c-w>h
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
+" TODO - resizing is good for laptop. probably make it smarter
+noremap <c-h> <c-w>h
+noremap <c-h> <c-w>h | :vertical resize 100<CR>
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+noremap <c-l> <c-w>l | :vertical resize 100<CR>
 
 " map sort function to a key
 " EDIT: remove this

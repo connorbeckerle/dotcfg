@@ -42,7 +42,7 @@ vim
     setup as ide/fix plugins - deferred for later, using pycharm now
     has links to read sometime bored http://www.cse.psu.edu/~deh25/cmpsc311/Instructions/vi.html
     swap esc/caps: https://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc
-        (did $ setxkbmap -option caps:escape)
+        (did $ setxkbmap -option caps:swapescape)
 
 linux tips
     count lines in file
@@ -69,6 +69,8 @@ fzf
     ALT-C - cd into the selected directory
         Set FZF_ALT_C_COMMAND to override the default command
         Set FZF_ALT_C_OPTS to pass additional options
+    ag --noheading . | fzf (or ag --nobreak --nonumbers --noheading . | fzf)
+        searches all text in dir
 
 grep
     in continuous pipes (e.g. tail -f) - doesn't work due to buffering
@@ -226,3 +228,17 @@ ssh
 
 conf files
     use $ config to manage commands
+
+pip
+    certif issues:
+        right now, just add to trustedhost (edit pip conf)
+        later, use Sauls' method - copy TDS CAs to {virtual_env}/lib/python3.5/site-packages/pip/_vendor/certifi/cacert.pem (but has to be done for each virtualenv)
+    pip.conf locations:
+        ... see the docs... doing it all in virtualenv
+        $VIRTUAL_ENV/pip.conf
+        https://pip.pypa.io/en/stable/user_guide/#config-file
+    'no module named pip.req':
+        use 9.0.1 (pip install pip==9.0.1)
+    not hitting tds pip repos - check pipconf ($ pip config list), and/or restart (check virtualenv too)
+    installing from local dir - pip install -e <dir>
+
