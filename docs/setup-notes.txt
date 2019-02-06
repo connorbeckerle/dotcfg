@@ -135,7 +135,9 @@ xrdp stuff
             line 163 - set port=5901
 
 keyboard remap for context key
-    helpful answer here: https://askubuntu.com/a/234681/902540
+    this worked until kvm/reboot: setxkbmap -option caps:swapescape
+    this fixed it maybe permanently: 
+        $ dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:swapescape']"
 
 windownow
     ini setup file at ~/.windowNow.ini. remove to reset hotkey

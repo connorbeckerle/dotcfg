@@ -5,6 +5,7 @@
 "
 " plugins to try installing/using
 "   -- high priority -- 
+"   vim-notes - https://github.com/xolox/vim-notes
 "   vim-fugitive
 "   ale with flake8 and/or others...? prospector
 "   ag/silver searcher - make better - use with ripgrep?
@@ -263,11 +264,11 @@ set splitright
 " bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
 " TODO - resizing is good for laptop. probably make it smarter
 noremap <c-h> <c-w>h
-noremap <c-h> <c-w>h | :vertical resize 100<CR>
+" noremap <c-h> <c-w>h | :vertical resize 100<CR>
 noremap <c-j> <c-w>j
 noremap <c-k> <c-w>k
 noremap <c-l> <c-w>l
-noremap <c-l> <c-w>l | :vertical resize 100<CR>
+" noremap <c-l> <c-w>l | :vertical resize 100<CR>
 
 " map sort function to a key
 " EDIT: remove this
