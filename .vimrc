@@ -5,10 +5,11 @@
 "
 " plugins to try installing/using
 "   -- high priority -- 
-"   vim-notes - https://github.com/xolox/vim-notes
 "   vim-fugitive
-"   ale with flake8 and/or others...? prospector
+"   syntax checker (ALE or validator)
+"       with... flake8 and/or others...? prospector?
 "   ag/silver searcher - make better - use with ripgrep?
+"   black (formatting - https://github.com/ambv/black)
 "
 "   -- low priority -- 
 "   powerline
@@ -16,6 +17,8 @@
 "   nerdtree
 "   Plugin 'tmhedberg/SimpylFold'
 "   Plugin 'Konfekt/FastFold'
+"   vim-notes - https://github.com/xolox/vim-notes
+"   vim-misc, vim-session (by xolox)
 "
 " features I want:
 "   semicolon to switch or open buffer for file
@@ -53,6 +56,7 @@ Plugin 'VundleVim/Vundle.vim'
 Bundle 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'w0rp/ale'
+" Plugin 'maralla/validator.vim'
 " Plugin 'nvie/vim-flake8'
 " Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-expand-region'
@@ -63,15 +67,15 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-repeat'
 "Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
 Plugin 'hdima/python-syntax'
-Plugin 'ZoomWin'
+Plugin 'ZoomWin'  " this one is not performant lol
 
 " color themes
-Plugin 'tomasr/molokai' " bad
+Plugin 'tomasr/molokai' " bad - not sure why not working
 Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'chriskempson/base16-vim'
+" Plugin 'chriskempson/base16-vim'
 " Plugin 'altercation/vim-colors-solarized' " kinda lame
-" Plugin 'morhetz/gruvbox'
-" Plugin 'junegunn/seoul256.vim'
+Plugin 'morhetz/gruvbox'
+Plugin 'junegunn/seoul256.vim'
 " Plugin 'Lokaltog/vim-distinguished'
 
 
@@ -87,10 +91,11 @@ syntax on
 
 " ### PLUGIN SETTINGS ###
 
+" TODO - remove if I like validator
 let g:ale_linters_explicit = 1
-" let g:ale_linters = {
-"             \    'python': ['flake8']
-"             \}
+let g:ale_linters = {
+            \    'python': ['flake8']
+            \}
 
 " map leader to comma. important to have at top
 let mapleader=","
@@ -106,7 +111,7 @@ set autoindent
 "highlight BadWhitespace ctermbg=red guibg=red
 "au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-
+" papercolor
 let g:PaperColor_Theme_Options = {
   \   'language': {
   \     'python': {
@@ -169,12 +174,30 @@ set updatetime=100 " update faster
 "             set t_ut=
 "             endif
 
-" mappings
+" Diff buffer with saved version: DiffSaved
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
+" this makes command mode (:) case-insensitive
+" assumes set ignorecase smartcase
+augroup dynamic_smartcase
+    autocmd!
+    autocmd CmdLineEnter : set nosmartcase
+    autocmd CmdLineLeave : set smartcase
+augroup END
+
+
+" nice settings and mappings
 inoremap jk <esc>
 set background=dark
 set encoding=utf-8
 set hidden " closing buffers often hides them instead of closing them
-" Y yanks to end of line
 " Map Ctrl-Backspace to delete the previous word in insert mode.
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>
@@ -196,7 +219,6 @@ nnoremap <leader>pyt Oimport pytest; pytest.set_trace()<Esc>
 nnoremap <leader>t :terminal<CR>
 " Y yanks to end of line like it should
 noremap Y y$
-" Useful settings
 set history=700
 set undolevels=700
 set tabstop=4
@@ -237,6 +259,9 @@ vnoremap <leader>c :w !xclip -i -sel c<CR><CR>
 command! -bar CurrDir cd %:p:h 
 " assumes fast thing to make more responsive
 set ttyfast
+" ,en/,ep go to next/prev errors
+nnoremap <leader>en :lnext<CR>
+nnoremap <leader>ep :lprev<CR>
 
 " experimental stuff here!
 

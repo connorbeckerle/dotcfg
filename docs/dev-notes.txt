@@ -34,7 +34,13 @@ vim
             repeat macro
         find matches: :%s/pattern//ng
         reload all buffers:
-            checkt
+            checkt [checktime]
+    loclist - where ALE errors show 
+        :lop - open
+        :lcl - close (or :q?)
+        :lne - next one
+        :lpr - prev one
+        
     plugins
         :PluginInstall .... needs vim restarted for some reason
         :PluginUpdate (or PluginClean to remove dir) after removing from vim
@@ -42,7 +48,7 @@ vim
     setup as ide/fix plugins - deferred for later, using pycharm now
     has links to read sometime bored http://www.cse.psu.edu/~deh25/cmpsc311/Instructions/vi.html
     swap esc/caps: https://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc
-        (did $ setxkbmap -option caps:swapescape)
+        setxkbmap -option caps:swapescape
 
 linux tips
     count lines in file
@@ -158,6 +164,8 @@ git guide
         $ git checkout --track origin/branch-name
     reset 1 file to branch:
         $ git checkout HEAD -- <file>
+    show diff commits b/w branches:
+        $ git log --left-right --graph --cherry-mark --oneline <b1>...<b2> (or use <b1> <b2> syntax)
 
     basics:
         rebase:

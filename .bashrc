@@ -22,7 +22,7 @@ alias pycharm=/home/usryzd/Downloads/pycharm-community-2018.1.1/bin/pycharm.sh
 alias plz='sudo $(fc -ln -1)'
 
 # pipe into useful clipboard more easily
-alias xclip="xclip -selection c"
+alias xclipcopy="xclip -selection c"
 
 
 
