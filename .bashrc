@@ -59,6 +59,7 @@ export PATH=$PATH:/opt/kea/sbin
 
 # required for fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.git.bash ] && . ~/.git.bash
 bind -x '"\C-e": fzf-file-widget'
 
 # required thing for ~/.dotcfg file
