@@ -10,9 +10,8 @@ gf() {
 
 gb() {
   is_in_git_repo &&
-    git branch -a -vv --color=always | grep -v '/HEAD\s' |
-    fzf --height 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}' |
-    sed 's#^remotes/[^/]*/##'
+    git branch -vv --color=always | grep -v '/HEAD\s' |
+    fzf --height 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}'
 }
 
 gt() {
@@ -35,7 +34,7 @@ gr() {
 
 bind '"\er": redraw-current-line'
 bind '"\C-g\C-f": "$(gf)\e\C-e\er"'  # file in git status
-bind '"\C-g\C-b": "$(gb)\e\C-e\er"'  # branch
+bind '"\C-b": "$(gb)\e\C-e\er"'      # branch - just ctrl-b
 bind '"\C-g\C-t": "$(gt)\e\C-e\er"'  # tag
 bind '"\C-g\C-h": "$(gh)\e\C-e\er"'  # commit hash
 bind '"\C-g\C-r": "$(gr)\e\C-e\er"'  # remote
