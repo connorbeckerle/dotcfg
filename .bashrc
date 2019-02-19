@@ -1,10 +1,13 @@
 ### Connor aliases ### 
-alias python=python3.5
 alias python3=python3.5
-alias py=python3.5
 alias ipy=ipython
-alias pip=pip3.5
 alias pip2='python2 -m pip'
+alias py=python3.5
+
+# these are bad - keep them out
+# alias python=python3.5
+# alias pip=pip3.5
+alias black='python3.6 -m black'
 
 alias pj='py ~/programming/scripts/tools/nice_json_tool.py'
 alias macformat='py ~/programming/scripts/tools/fmt_mac.py'
@@ -24,6 +27,8 @@ alias plz='sudo $(fc -ln -1)'
 # pipe into useful clipboard more easily
 alias xclipcopy="xclip -selection c"
 
+# gco is git checkout
+alias gco='git co $(gb)'
 
 
 # .bashrc

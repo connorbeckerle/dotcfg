@@ -51,22 +51,21 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" PLUGINS GO HERE
-" NOTE: !!!! don't forget to run :PluginInstall after adding new one
+" PLUGINS GO HERE. NOTE: !!!! don't forget to run :PluginInstall after adding new one
 Bundle 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'w0rp/ale'
-" Plugin 'maralla/validator.vim'
-" Plugin 'nvie/vim-flake8'
-" Plugin 'scrooloose/nerdtree'
+Plugin 'nvie/vim-flake8'
 Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-fugitive'
 "Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
 Plugin 'hdima/python-syntax'
+" Plugin 'ambv/black'  " need to fix python3 support
 Plugin 'ZoomWin'  " this one is not performant lol
 
 " color themes
@@ -91,7 +90,6 @@ syntax on
 
 " ### PLUGIN SETTINGS ###
 
-" TODO - remove if I like validator
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
             \    'python': ['flake8']
@@ -115,7 +113,10 @@ set autoindent
 let g:PaperColor_Theme_Options = {
   \   'language': {
   \     'python': {
-  \       'highlight_builtins' : 1},}}
+  \       'highlight_builtins' : 1}},}
+  " \   'theme': {
+  " \     'default.dark': {
+  " \       'transparent_background': 1}}}
 colorscheme PaperColor
 
 " youcompleteme
@@ -292,8 +293,9 @@ noremap <c-h> <c-w>h
 " noremap <c-h> <c-w>h | :vertical resize 100<CR>
 noremap <c-j> <c-w>j
 noremap <c-k> <c-w>k
+" TODO - resizing is good for laptop. probably make it smarter
 noremap <c-l> <c-w>l
-" noremap <c-l> <c-w>l | :vertical resize 100<CR>
+" noremap <c-l> <c-w>l | :vertical resize 101<CR>
 
 " map sort function to a key
 " EDIT: remove this

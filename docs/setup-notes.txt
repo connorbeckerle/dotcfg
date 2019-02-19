@@ -50,12 +50,53 @@ new proj setup guide
 
 ### resources
 yum 
-    yum list installed - what it says
-        can also take param
-    ulyaoth repo failed so I disabled it with $ yum-config-manager --disable ulyaoth
+    see installed programs:
+        yum list installed - what it says. can also take a search param
+    see repos available:
+        yum repolist
+    
+    misc
+        ulyaoth repo failed so I disabled it with $ yum-config-manager --disable ulyaoth
 
 rpm
     output all installed packages: $ rpm -qa
+
+centos
+    see version
+        rpm -q centos-release
+
+vim
+    installation: 
+        see youcompleteme guide.. https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
+        installed to ~
+        configdir:
+            can find with eg python3.6-config --configdir EDIT IS WRONG
+            had to make it, by installing pip from yum, then running 
+                $ sudo pip3.6 install config python-config
+            get its location:
+                $ python3.6-config --configdir
+                note this seems to be wrong...
+            it is: /usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu
+        $ ./configure --with-features=huge \
+                --enable-multibyte \
+                --enable-pythoninterp=yes \
+                --with-python-command=python2.7 \
+                --with-python-config-dir=/usr/lib64/python2.7/config \
+                --enable-python3interp=yes \
+                --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu \
+                --with-python3-command=python3.6 \
+                --enable-gui=gtk2 \
+                --enable-cscope \
+                --prefix=/usr/local \
+                --enable-fail-if-missing \
+        $ make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+        $ sudo make install
+
+    uninstallation
+        go to source dir
+        make distclean (I guess?)
+        make VIMRUNTIMEDIR=/usr/local/share/vim/vim81  # not sure how to find this..
+        sudo make uninstall
 
 couchbase
     install:

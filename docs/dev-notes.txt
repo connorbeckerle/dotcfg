@@ -35,6 +35,10 @@ vim
         find matches: :%s/pattern//ng
         reload all buffers:
             checkt [checktime]
+        motions inside things (eg in parens) can span multiple lines
+        ctrl-z
+            disable vim, drop to shell
+            to resume vim (foreground): $ fg
     loclist - where ALE errors show 
         :lop - open
         :lcl - close (or :q?)
@@ -192,6 +196,9 @@ python general
         https://gist.github.com/datagrok/40bf84d5870c41a77dc6
     to start debugger on breakpoint:
         python -m pdb -c continue myscript.py
+
+flake8
+    conf in ~/.config/flake8
 
 nice python things
     bumpversion
