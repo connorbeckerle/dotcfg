@@ -5,11 +5,13 @@
 "
 " plugins to try installing/using
 "   -- high priority -- 
-"   vim-fugitive
+"   vim-fugitive (look here for docs https://github.com/tpope/vim-fugitive)
 "   syntax checker (ALE or validator)
 "       with... flake8 and/or others...? prospector?
 "   ag/silver searcher - make better - use with ripgrep?
 "   black (formatting - https://github.com/ambv/black)
+"       try the different python3 config dir
+"       try installing with just python3
 "
 "   -- low priority -- 
 "   powerline
@@ -198,7 +200,7 @@ augroup END
 inoremap jk <esc>
 set background=dark
 set encoding=utf-8
-set hidden " closing buffers often hides them instead of closing them
+set hidden " closing buffers now usually hides them instead of closing them
 " Map Ctrl-Backspace to delete the previous word in insert mode.
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>
@@ -234,8 +236,6 @@ set ignorecase
 set smartcase
 set showmatch " matching brackets flash
 set matchtime=1 " for only 0.1s
-" very magic mode for searching. most things need to be escaped. questionable
-nnoremap / /\v
 set backspace=2 " better backspacing - go over lines etc
 " better tab completion
 set wildmode=longest,list,full
@@ -249,6 +249,7 @@ set foldlevel=99
 set scrolloff=3
 " this is good.
 nnoremap ; :
+nnoremap ;; ;
 " makes statusbar permanent even for 1 window
 set laststatus=2
 " bd (buffer kill normally) will now restore previous buffer to that window

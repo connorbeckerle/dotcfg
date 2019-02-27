@@ -2,6 +2,7 @@ reboot tasks...
     oracle
         rlsql / as sysdba <<< 'startup'
         lsnrctl start (takes a minute)
+        (shutdown db cmd is 'shutdown immediate')
     couchbase
         sudo systemctl start docker
         sudo docker start db
