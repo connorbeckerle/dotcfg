@@ -271,3 +271,7 @@ pip
     not hitting tds pip repos - check pipconf ($ pip config list), and/or restart (check virtualenv too)
     installing from local dir - pip install -e <dir>
 
+useful RFCs
+    2131 - DHCP - https://tools.ietf.org/html/rfc2131
+    2132 - DHCP options - https://tools.ietf.org/html/rfc2132
+    3046 - DHCP relay agent info - https://tools.ietf.org/html/rfc3046
