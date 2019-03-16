@@ -6,9 +6,9 @@
 " plugins to try installing/using
 "   -- high priority -- 
 "   vim-fugitive (look here for docs https://github.com/tpope/vim-fugitive)
-"   syntax checker (ALE or validator)
-"       with... flake8 and/or others...? prospector?
-"   ag/silver searcher - make better - use with ripgrep?
+"       keep getting better at it 
+"   side search plugin or ctrlsf plugin for better codebase searching
+"   ag/silver searcher - switch to ripgrep?
 "   black (formatting - https://github.com/ambv/black)
 "       try the different python3 config dir
 "       try installing with just python3

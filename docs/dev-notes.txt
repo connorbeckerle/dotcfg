@@ -39,6 +39,9 @@ vim
         ctrl-z
             disable vim, drop to shell
             to resume vim (foreground): $ fg
+        =
+            auto-indent line
+            normally takes a motion, works on its own in visual mode, or == works on the line
     loclist - where ALE errors show 
         :lop - open
         :lcl - close (or :q?)
@@ -210,6 +213,9 @@ python general
     to start debugger on breakpoint:
         python -m pdb -c continue myscript.py
     got a really cool performance profiler somehow... it output a graph for it..
+    mocks
+        for instance attr mocks, have to mock *after* instantiation!
+            or do this: https://stackoverflow.com/a/25689579/5537652
 
 flake8
     conf in ~/.config/flake8
