@@ -65,10 +65,13 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-obsession'
+Plugin 'dhruvasagar/vim-prosession'
 "Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
 Plugin 'hdima/python-syntax'
 " Plugin 'ambv/black'  " need to fix python3 support
 Plugin 'ZoomWin'  " this one is not performant lol
+" Plugin 'dkarter/bullets.vim'  # TODO - make this work
 
 " color themes
 Plugin 'tomasr/molokai' " bad - not sure why not working
@@ -293,12 +296,14 @@ set splitright
 " bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
 " TODO - resizing is good for laptop. probably make it smarter
 noremap <c-h> <c-w>h
-" noremap <c-h> <c-w>h | :vertical resize 100<CR>
+noremap <c-h> <c-w>h | :vertical resize 111<CR>
+" noremap <c-h> <c-w>h | :vertical resize 120<CR>
 noremap <c-j> <c-w>j
 noremap <c-k> <c-w>k
 " TODO - resizing is good for laptop. probably make it smarter
 noremap <c-l> <c-w>l
-" noremap <c-l> <c-w>l | :vertical resize 101<CR>
+noremap <c-l> <c-w>l | :vertical resize 110<CR>
+" noremap <c-l> <c-w>l | :vertical resize 120<CR>
 
 " map sort function to a key
 " EDIT: remove this
