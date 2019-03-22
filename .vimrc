@@ -8,13 +8,16 @@
 "   vim-fugitive (look here for docs https://github.com/tpope/vim-fugitive)
 "       keep getting better at it 
 "   side search plugin or ctrlsf plugin for better codebase searching
-"   ag/silver searcher - switch to ripgrep?
+"   ag/silver searcher - should switch to ripgrep
 "   black (formatting - https://github.com/ambv/black)
 "       try the different python3 config dir
 "       try installing with just python3
+"   alefix
+"       get more tools (like black)
+"       make autofix on save
 "
 "   -- low priority -- 
-"   powerline
+"   janko vim-test - run tests from in vim
 "   splitjoin https://github.com/AndrewRadev/splitjoin.vim
 "   nerdtree
 "   Plugin 'tmhedberg/SimpylFold'
@@ -63,8 +66,10 @@ Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-obsession'
 Plugin 'dhruvasagar/vim-prosession'
 "Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
@@ -83,7 +88,6 @@ Plugin 'junegunn/seoul256.vim'
 " Plugin 'Lokaltog/vim-distinguished'
 
 
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -93,24 +97,27 @@ syntax on
 " ### END VUNDLE ###
 
 
-" ### PLUGIN SETTINGS ###
-
-let g:ale_linters_explicit = 1
-let g:ale_linters = {
-            \    'python': ['flake8']
-            \}
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-
 " map leader to comma. important to have at top
 let mapleader=","
 
-" nice other format stuff
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
-set autoindent
+
+" ### PLUGIN SETTINGS ###
+
+" ALE
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+            \   'python': ['flake8']
+            \   }
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_fixers = {
+            \   'python': [
+            \       'add_blank_lines_for_python_control_statements',
+            \       'isort',
+            \       'remove_trailing_lines',
+            \       'trim_whitespace',
+            \       ]
+            \   }
 
 " highlight extra whitespace - disabling for now. should be caught by linter
 "highlight BadWhitespace ctermbg=red guibg=red
@@ -144,21 +151,7 @@ let g:ycm_filetype_blacklist = {
             \ 'txt': 1,
             \ 'help': 1}
 
-" syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_check_on_open = 0
-"let g:syntastic_check_on_wq = 0
-"" do syntax check with leader-c
-"nnoremap <leader>cc :SyntasticCheck<CR>
-"nnoremap <leader>cr :SyntasticReset<CR>
-"let b:syntastic_mode='passive'
-"let g:python_highlight_all=1
-"let g:python_space_error_highlight=0
-"let python_highlight_space_error=0 " for plugin I guess
-
-" commentary
+" commentary - remap ctrl-/ to comment
 nmap <C-_> gcc
 vmap <C-_> gc
 
@@ -171,16 +164,31 @@ nnoremap <leader>a :Ag<CR>
 " gitgutter
 set updatetime=100 " update faster
 
+" lightline
+let g:lightline = {
+            \ 'colorscheme': 'default' 
+            \}
+let g:lightline.active = {
+            \ 'left': [ [ 'mode', 'paste' ],
+            \           [ 'readonly', 'relativepath', 'modified' ] ],
+            \ 'right': [ [ 'lineinfo' ],
+            \            [ 'percent' ] ] }
+let g:lightline.inactive = {
+            \ 'left': [ [ 'relativepath' ] ],
+            \ 'right': [ [ 'lineinfo' ],
+            \            [ 'percent' ] ] }
+set noshowmode
+
+
+" nice other format stuff
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+set autoindent
+
 
 " ### CONNOR MISC SETTINGS ###
-" TEMPORARY: try to fix this vim terminal in tmux. actually this can just be
-" deleted
-" if &term =~ '256color'
-"       " disable Background Color Erase (BCE) so that color schemes
-"       "   " render properly when inside 256-color tmux and GNU screen.
-"       "     " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-"             set t_ut=
-"             endif
 
 " Diff buffer with saved version: DiffSaved
 function! s:DiffWithSaved()
@@ -192,7 +200,7 @@ function! s:DiffWithSaved()
 endfunction
 com! DiffSaved call s:DiffWithSaved()
 
-" this makes command mode (:) case-insensitive
+" this makes command mode (:) case-insensitive. extremely useful
 " assumes set ignorecase smartcase
 augroup dynamic_smartcase
     autocmd!
@@ -257,9 +265,9 @@ nnoremap ; :
 nnoremap ;; ;
 " makes statusbar permanent even for 1 window
 set laststatus=2
-" bd (buffer kill normally) will now restore previous buffer to that window
+" bc will now restore previous buffer to that window
 " WORSE version cnoremap bd bp<bar>vsp<bar>bn<bar>bd
-cnoremap bd b#<bar>bd# 
+command BC b#<bar>bd# 
 " ,c copies text to clipboard
 vnoremap <leader>c :w !xclip -i -sel c<CR><CR>
 " changes to current buffer's dir. -bar says you can concatenate commands with a |
