@@ -76,7 +76,7 @@ Plugin 'dhruvasagar/vim-prosession'
 Plugin 'hdima/python-syntax'
 " Plugin 'ambv/black'  " need to fix python3 support
 Plugin 'ZoomWin'  " this one is not performant lol
-" Plugin 'dkarter/bullets.vim'  # TODO - make this work
+Plugin 'dkarter/bullets.vim'  " TODO - make this work
 
 " color themes
 Plugin 'tomasr/molokai' " bad - not sure why not working
@@ -118,6 +118,7 @@ let g:ale_fixers = {
             \       'trim_whitespace',
             \       ]
             \   }
+command! AF ALEFix
 
 " highlight extra whitespace - disabling for now. should be caught by linter
 "highlight BadWhitespace ctermbg=red guibg=red
@@ -174,18 +175,12 @@ let g:lightline.active = {
             \ 'right': [ [ 'lineinfo' ],
             \            [ 'percent' ] ] }
 let g:lightline.inactive = {
-            \ 'left': [ [ 'relativepath' ] ],
+            \ 'left': [ [ 'mode', 'paste' ],
+            \           [ 'readonly', 'relativepath', 'modified' ] ],
             \ 'right': [ [ 'lineinfo' ],
             \            [ 'percent' ] ] }
+" prevents showing eg '--insert--' in statusbar
 set noshowmode
-
-
-" nice other format stuff
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
-set autoindent
 
 
 " ### CONNOR MISC SETTINGS ###
@@ -207,7 +202,6 @@ augroup dynamic_smartcase
     autocmd CmdLineEnter : set nosmartcase
     autocmd CmdLineLeave : set smartcase
 augroup END
-
 
 " nice settings and mappings
 inoremap jk <esc>
@@ -267,23 +261,32 @@ nnoremap ;; ;
 set laststatus=2
 " bc will now restore previous buffer to that window
 " WORSE version cnoremap bd bp<bar>vsp<bar>bn<bar>bd
-command BC b#<bar>bd# 
+command! BC b#<bar>bd# 
 " ,c copies text to clipboard
 vnoremap <leader>c :w !xclip -i -sel c<CR><CR>
 " changes to current buffer's dir. -bar says you can concatenate commands with a |
 command! -bar CurrDir cd %:p:h 
-" assumes fast thing to make more responsive
+" assumes fast connection to make more responsive
 set ttyfast
 " ,en/,ep go to next/prev errors
 nnoremap <leader>en :lnext<CR>
 nnoremap <leader>ep :lprev<CR>
+set autoindent
+autocmd FileType html,css,javascript,json,text setlocal tabstop=2 softtabstop=2 shiftwidth=2
+" bullet toggle in txt file
+autocmd FileType text setlocal commentstring=-%s
+
 
 " experimental stuff here!
+" makes re-indenting a lot better
+nnoremap < <<
+nnoremap > >>
 
 
 
 
 " write to read-only file with :w!!
+" this is kind of deprecated by vim-eunuch
 cmap w!! w !sudo tee > /dev/null %
 
 " vim controls cursor/copy without line nums
