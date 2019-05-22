@@ -5,10 +5,16 @@
 "
 " plugins to try installing/using
 "   -- high priority -- 
+"   make <leader>/ do ag search on current file
 "   vim-fugitive (look here for docs https://github.com/tpope/vim-fugitive)
 "       keep getting better at it 
 "   side search plugin or ctrlsf plugin for better codebase searching
-"   ag/silver searcher - should switch to ripgrep
+"   try ctrlsf instead of side search? 
+"       https://github.com/dyng/ctrlsf.vim
+"       might work better with ripgrep
+"       has edit-in-search-window
+"   try ripgrep instead of ag? 
+"       faster
 "   black (formatting - https://github.com/ambv/black)
 "       try the different python3 config dir
 "       try installing with just python3
@@ -60,7 +66,7 @@ Plugin 'VundleVim/Vundle.vim'
 Bundle 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'w0rp/ale'
-Plugin 'nvie/vim-flake8'
+" Plugin 'nvie/vim-flake8'  " superseded by ale
 Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
@@ -76,7 +82,8 @@ Plugin 'dhruvasagar/vim-prosession'
 Plugin 'hdima/python-syntax'
 " Plugin 'ambv/black'  " need to fix python3 support
 Plugin 'ZoomWin'  " this one is not performant lol
-Plugin 'dkarter/bullets.vim'  " TODO - make this work
+" Plugin 'dkarter/bullets.vim'  " TODO - make this work
+Plugin 'ddrscott/vim-side-search'
 
 " color themes
 Plugin 'tomasr/molokai' " bad - not sure why not working
@@ -182,6 +189,18 @@ let g:lightline.inactive = {
 " prevents showing eg '--insert--' in statusbar
 set noshowmode
 
+" sidesearch
+" note - docs are only here -_- https://github.com/ddrscott/vim-side-search
+cabbrev ss SideSearch
+" --heading and --stats are required!
+let g:side_search_prg = 'ag '
+  \. " --ignore='*.js.map'"
+  \. " --heading --stats -B 1 -A 4"
+" Can use `vnew` or `new`
+let g:side_search_splitter = 'vnew'
+" I like 40% splits, change it if you don't
+let g:side_search_split_pct = 0.4
+
 
 " ### CONNOR MISC SETTINGS ###
 
@@ -205,6 +224,8 @@ augroup END
 
 " nice settings and mappings
 inoremap jk <esc>
+inoremap Jk <esc>
+inoremap JK <esc>
 set background=dark
 set encoding=utf-8
 set hidden " closing buffers now usually hides them instead of closing them
@@ -249,6 +270,12 @@ set wildmode=longest,list,full
 set wildmenu
 set nowrap  " don't automatically wrap on load
 set fo-=t   " don't automatically wrap text when typing - not sure if useful
+" keep windows sized reasonably and split naturally
+set winheight=35
+set winminheight=5
+set winminwidth=12
+set splitbelow
+set splitright
 " Enable folding with spacebar
 noremap <space> za
 set foldmethod=indent
@@ -259,8 +286,7 @@ nnoremap ; :
 nnoremap ;; ;
 " makes statusbar permanent even for 1 window
 set laststatus=2
-" bc will now restore previous buffer to that window
-" WORSE version cnoremap bd bp<bar>vsp<bar>bn<bar>bd
+" delete current buffer and previous buffer to that window
 command! BC b#<bar>bd# 
 " ,c copies text to clipboard
 vnoremap <leader>c :w !xclip -i -sel c<CR><CR>
@@ -275,12 +301,20 @@ set autoindent
 autocmd FileType html,css,javascript,json,text setlocal tabstop=2 softtabstop=2 shiftwidth=2
 " bullet toggle in txt file
 autocmd FileType text setlocal commentstring=-%s
-
-
-" experimental stuff here!
 " makes re-indenting a lot better
 nnoremap < <<
 nnoremap > >>
+" bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+" TODO - resizing is good for laptop. probably make it smarter
+noremap <c-h> <c-w>h
+" noremap <c-h> <c-w>h | :vertical resize 111<CR>
+noremap <c-l> <c-w>l
+" noremap <c-l> <c-w>l | :vertical resize 110<CR>
+
+
+" experimental stuff here!
 
 
 
@@ -289,36 +323,8 @@ nnoremap > >>
 " this is kind of deprecated by vim-eunuch
 cmap w!! w !sudo tee > /dev/null %
 
-" vim controls cursor/copy without line nums
-" DOESN'T WORK :(
-"se mouse+=v
-
-
-
 
 " ### PRESET DEFAULTS. sketchy ###
-
-" keep windows sized reasonably and split naturally
-set winheight=35
-set winminheight=5
-set splitbelow
-set splitright
-
-" bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
-" TODO - resizing is good for laptop. probably make it smarter
-noremap <c-h> <c-w>h
-noremap <c-h> <c-w>h | :vertical resize 111<CR>
-" noremap <c-h> <c-w>h | :vertical resize 120<CR>
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-" TODO - resizing is good for laptop. probably make it smarter
-noremap <c-l> <c-w>l
-noremap <c-l> <c-w>l | :vertical resize 110<CR>
-" noremap <c-l> <c-w>l | :vertical resize 120<CR>
-
-" map sort function to a key
-" EDIT: remove this
-"vnoremap <Leader>s :sort<CR>
 
 " Disable stupid backup and swap files - they trigger too many events
 " for file system watchers
@@ -329,3 +335,25 @@ set noswapfile
 " Exclude VC directories
 set wildignore+=*/.hg/*,*/.svn/*
 
+
+" REMOTE SETTINGS that I copy to remote servers
+" usryzd settings. you can remove these or tell me if they ignore you
+" inoremap jk <esc>
+" inoremap Jk <esc>
+" inoremap JK <esc>
+" set background=dark
+" set tabstop=4
+" set softtabstop=4
+" set shiftwidth=4
+" set shiftround " round indent to tabwidth
+" set expandtab
+" set fileformat=unix
+" set hlsearch " Make search case insensitive
+" set incsearch
+" set ignorecase
+" set smartcase
+" set showmatch " matching brackets flash
+" set matchtime=1 " for only 0.1s
+" " Bind nohl - removes highlight of your last search
+" noremap ,d :nohl<CR>
+" vnoremap ,d :nohl<CR>

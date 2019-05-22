@@ -1,13 +1,17 @@
 reboot tasks...
     oracle
-        rlsql / as sysdba <<< 'startup'
-        lsnrctl start (takes a minute)
+        echo 'startup' | rlsql / as sysdba
+        lsnrctl start
         (shutdown db cmd is 'shutdown immediate')
     couchbase
         sudo systemctl start docker
         sudo docker start db
     rabbit
         sudo /sbin/service rabbitmq-server start
+    ssh agent
+        source ~/.bash_profile
+
+    OLD:
     kea/cassandra - TO DO - UPDATE
         # sudo -u postgres -i
         # postgres -D /var/lib/pgsql/data > logfile 2>&1 &

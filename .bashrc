@@ -25,13 +25,20 @@ alias pycharm=/home/usryzd/Downloads/pycharm-community-2018.1.1/bin/pycharm.sh
 alias plz='sudo $(fc -ln -1)'
 
 # pipe into useful clipboard more easily
-alias xclipcopy="xclip -selection c"
+alias xclipc="xclip -selection c"
+alias xclipp="xclip -o"
 
 # gco is git checkout
 alias gco='git co $(gb)'
 
+### useful history settings ###
+# Make Bash append rather than overwrite the history on disk:
+shopt -s histappend
+# Don't put duplicate lines in the history.
+export HISTCONTROL=ignoredups
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 
-# .bashrc
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
