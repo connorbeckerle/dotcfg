@@ -30,6 +30,9 @@
 "   Plugin 'Konfekt/FastFold'
 "   vim-notes - https://github.com/xolox/vim-notes
 "   vim-misc, vim-session (by xolox)
+"   NOTE TAKING:
+"       https://news.ycombinator.com/item?id=20049075 (notational velocity)
+    "       https://github.com/alok/notational-fzf-vim
 "
 " features I want:
 "   semicolon to switch or open buffer for file
@@ -45,6 +48,7 @@
 "   ycm gotodefinition work with decorators :(
 "   see current class/function def (e.g. go to def of current scope) (or show
 "       at bottom)
+"   somewhat of a bash thing, but fzf for git branches
 
 
 
@@ -117,14 +121,15 @@ let g:ale_linters = {
             \   }
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
+" maybe do later: isort
+            " \       'remove_trailing_lines',
+            " \       'trim_whitespace',
 let g:ale_fixers = {
             \   'python': [
-            \       'add_blank_lines_for_python_control_statements',
-            \       'isort',
-            \       'remove_trailing_lines',
-            \       'trim_whitespace',
+            \       'black',
             \       ]
             \   }
+let g:ale_python_black_options = '-l 100 -S'
 command! AF ALEFix
 
 " highlight extra whitespace - disabling for now. should be caught by linter
@@ -228,7 +233,7 @@ inoremap Jk <esc>
 inoremap JK <esc>
 set background=dark
 set encoding=utf-8
-set hidden " closing buffers now usually hides them instead of closing them
+set hidden " closing buffers now usually hides them instead of closing them. important!
 " Map Ctrl-Backspace to delete the previous word in insert mode.
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>
