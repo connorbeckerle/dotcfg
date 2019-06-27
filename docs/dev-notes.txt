@@ -360,5 +360,9 @@ linux tips
       monitor proc mem: top -c -d 1 -b | grep --line-buffered '[c]onv_events_05152019' >> ~/log/proc_mem.log
         line-buffered - obvious
         brackets - get regexed out but then cause this grep command to not show up in its own grep
-
-
+    getting root access...
+      https://touhidshaikh.com/blog/?p=790
+      but basically:
+        sudo -l to see a cmd you can sudo like less or vim
+        run less as sudo
+        type !sh<enter>, and you're root!
