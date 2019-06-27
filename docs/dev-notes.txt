@@ -20,7 +20,7 @@ vim
         ctrl-w = 
             resize to equal size
         ctrl-w o
-            maximize pane, reverse
+            maximize pane and reverse (:only/:on to do this without being able to restore)
         :BC
             kills buffer, restores last one
         ctrl-w r
@@ -44,6 +44,11 @@ vim
         =
             auto-indent line
             normally takes a motion, works on its own in visual mode, or == works on the line
+        count search matches:
+            :%s/pattern//gn (n is what makes it matter)
+            can also do  normal / search followed by :%s///gn
+        :only [:on]
+            close other splits
     loclist - where ALE errors show 
         :lop - open
         :lcl - close (or :q?)
@@ -59,6 +64,7 @@ vim
         Gdiff ! index on left, working copy on right
             diffget and diffput for hunks
             for conflicted merge, makes a 3 way split
+          this is awesome with Gw for adding changes!!
 
         Gstatus (convenience, can jump to files)
         Gcommit (convenience)
@@ -227,10 +233,15 @@ python general
       https://stackoverflow.com/questions/31127652/cannot-catch-keyboardinterrupt-in-command-prompt-twice
       trying atexit I guess.. need to use globals to pass stuff to it probably
 
+    multiprocing resources
+      https://chriskiehl.com/article/parallelism-in-one-line
+        https://nb4799.neu.edu/wordpress/?p=783 as an addendum on sharing data
+      
+
 flake8
     conf in ~/.config/flake8
 
-nice python things
+nice python libs/utils
     bumpversion
 
 
@@ -275,11 +286,17 @@ bash
 tmux
     http://www.dayid.org/comp/tm.html
     tmux a - attach to most recent session
+    tmux a -t <sessname> - attach to <sessname> session
     prefix d - detach (save session)
     prefix c - new window
     prefix n/p - next/prev window
     prefix C-a (double prefix) - most recent window
     prefix hkjl - select pane
+    prefix z - maximize/unmaximize pane (v useful)
+    prefix $ - rename session
+    prefix : - do generic command
+    prefix :setw synchronize-panes on/off - synchronize panes!!
+
 
 ssh
     agent stuff
@@ -317,9 +334,11 @@ general lessons
     this has bitten me .... 3 times or so and caused a headache each time
   when taking over a project, particularly one that isn't evidently proven to work, have to go 
     over everything with a fine-tooth comb... no part of IPT has worked properly in any way so far.
+  when writing scripts, real logging, real argparsing, and crash resilience are all really helpful
 
 
 linux tips
+    interrupt a process nicely: kill -SIGINT
     diffing things nicely, 2 options:
         vim -d <things> (vimdiff)
         diff <things> | vim -R -
