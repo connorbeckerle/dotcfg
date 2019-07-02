@@ -165,6 +165,7 @@ let g:ycm_filetype_blacklist = {
             \ 'help': 1}
 
 " commentary - remap ctrl-/ to comment
+" nmap <C-_> gcc  j  " idk why this doesn't work
 nmap <C-_> gcc
 vmap <C-_> gc
 

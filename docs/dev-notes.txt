@@ -330,11 +330,15 @@ useful RFCs
     3046 - DHCP relay agent info - https://tools.ietf.org/html/rfc3046
 
 general lessons
+  never pass around json data to be used in multiple places. always make a class to
+    serialize/deserialize. it is always worth it. ex: CurrentLeases (fixed to be good,
+    for couchbase), DBWriter (still bad, uses a rabbit queue)
   figure out everyone else's business requirements! can't just make APIs to spec as written!
     this has bitten me .... 3 times or so and caused a headache each time
   when taking over a project, particularly one that isn't evidently proven to work, have to go 
     over everything with a fine-tooth comb... no part of IPT has worked properly in any way so far.
   when writing scripts, real logging, real argparsing, and crash resilience are all really helpful
+    to have as boilerplate
 
 
 linux tips
@@ -366,3 +370,8 @@ linux tips
         sudo -l to see a cmd you can sudo like less or vim
         run less as sudo
         type !sh<enter>, and you're root!
+      on deployed servers:
+        [sudo -l to see a valid less command]
+        sudo /usr/bin/less /etc/httpd/conf/httpd.conf
+        run !sh<enter>
+        su daitnap1
