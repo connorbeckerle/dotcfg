@@ -1,0 +1,15 @@
+[include]
+    path = .tds.gitconfig
+[core]
+	editor = vim
+	excludesfile = /home/usryzd/.gitignore_global
+[color]
+	ui = true
+
+[alias]
+    cleanup = "!git branch --merged develop | grep  -v '\\*\\|master\\|develop' | xargs -n 1 -r git branch -d"
+    prettygraph = "!git log --graph --full-history --all --color         --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\""
+	co = checkout
+    br = branch
+
+
