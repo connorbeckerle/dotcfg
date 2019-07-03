@@ -97,6 +97,8 @@ Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'morhetz/gruvbox'
 Plugin 'junegunn/seoul256.vim'
 " Plugin 'Lokaltog/vim-distinguished'
+Plugin 'mtth/scratch.vim'
+
 
 
 " All of your Plugins must be added before the following line
@@ -180,16 +182,17 @@ set updatetime=100 " update faster
 
 " lightline
 let g:lightline = {
-            \ 'colorscheme': 'default' 
-            \}
+            \ 'colorscheme': 'default',
+            \ 'component_function': {
+            \   'gitbranch': 'fugitive#head'} }
 let g:lightline.active = {
             \ 'left': [ [ 'mode', 'paste' ],
-            \           [ 'readonly', 'relativepath', 'modified' ] ],
+            \           [ 'readonly', 'relativepath', 'gitbranch', 'modified' ] ],
             \ 'right': [ [ 'lineinfo' ],
             \            [ 'percent' ] ] }
 let g:lightline.inactive = {
             \ 'left': [ [ 'mode', 'paste' ],
-            \           [ 'readonly', 'relativepath', 'modified' ] ],
+            \           [ 'readonly', 'relativepath', 'gitbranch', 'modified' ] ],
             \ 'right': [ [ 'lineinfo' ],
             \            [ 'percent' ] ] }
 " prevents showing eg '--insert--' in statusbar
@@ -207,6 +210,9 @@ let g:side_search_splitter = 'vnew'
 " I like 40% splits, change it if you don't
 let g:side_search_split_pct = 0.4
 
+" fugitive
+" this is supposed to delete fugitive buffers
+autocmd BufReadPost fugitive://* set bufhidden=delete
 
 " ### CONNOR MISC SETTINGS ###
 
@@ -287,6 +293,8 @@ noremap <space> za
 set foldmethod=indent
 set foldlevel=99
 set scrolloff=3
+" vertical diffs by default
+set diffopt+=vertical
 " this is good.
 nnoremap ; :
 nnoremap ;; ;
@@ -304,6 +312,8 @@ set ttyfast
 nnoremap <leader>en :lnext<CR>
 nnoremap <leader>ep :lprev<CR>
 set autoindent
+" automatically reads files if they haven't changed in vim. not sure if I want....
+" set autoread
 autocmd FileType html,css,javascript,json,text setlocal tabstop=2 softtabstop=2 shiftwidth=2
 " bullet toggle in txt file
 autocmd FileType text setlocal commentstring=-%s
@@ -318,6 +328,7 @@ noremap <c-h> <c-w>h
 " noremap <c-h> <c-w>h | :vertical resize 111<CR>
 noremap <c-l> <c-w>l
 " noremap <c-l> <c-w>l | :vertical resize 110<CR>
+
 
 
 " experimental stuff here!

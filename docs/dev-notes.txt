@@ -47,6 +47,8 @@ vim
         count search matches:
             :%s/pattern//gn (n is what makes it matter)
             can also do  normal / search followed by :%s///gn
+        %!python -m json.tool
+            format json in open buffer
         :only [:on]
             close other splits
     loclist - where ALE errors show 
@@ -61,13 +63,32 @@ vim
         useful commands..
         Git <cmd> !
         Gblame !
+        Gedit ! opens readonly buffer of a git object
+          4 types
+            blob (file) - branch:path
+            tree (list of ... things in the tree?)
+            commit (eg @ or SHA)
+          % autocompletes to "path of current buffer" (general vim feature)
+          Gsplit/Gvsplit open it in a split
+          this has a lot of features 
+            filenames and SHAs: press enter to go to
+            can diff and view other things
         Gdiff ! index on left, working copy on right
-            diffget and diffput for hunks
-            for conflicted merge, makes a 3 way split
           this is awesome with Gw for adding changes!!
-
-        Gstatus (convenience, can jump to files)
-        Gcommit (convenience)
+          for conflicted merge, makes a 3 way split
+          :diffget and :diffput on a visual selection/line count to stage hunks
+            (diffput is stage)
+            (better workflow: :do/:dp work on only one line (or the empty diff above).
+             stay in the index buffer and use :do or range :diffget, since it makes more
+             sense to be modifying the buffer you're in)
+        Gstatus 
+          :G also activates it 
+          can stage/unstage files with -
+          can open hunks with = on a file, then 
+            C-n/C-p to jump between
+            s/u to stage/unstage
+          more in :h fugitive-mappings
+        Gcommit (convenience wrapper)
         Gwrite (convenience, saves + adds to index)
         Gread (convenience, checkout from index)
         
