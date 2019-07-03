@@ -51,6 +51,9 @@ vim
             format json in open buffer
         :only [:on]
             close other splits
+        :windo diffthis
+            diff 2 buffers
+            turn off with :windo diffoff (or just :diffoff)
     loclist - where ALE errors show 
         :lop - open
         :lcl - close (or :q?)
@@ -60,11 +63,19 @@ vim
         :PluginInstall .... needs vim restarted for some reason
         :PluginUpdate (or PluginClean to remove dir) after removing from vim
     fugitive
-        useful commands..
-        Git <cmd> !
-        Gblame !
-        Gedit ! opens readonly buffer of a git object
-          4 types
+        Git <cmd>
+          execute arbitrary git cmd
+        Gstatus 
+          :G also activates it 
+          summary of things
+          can stage/unstage files with -
+          can open hunks with = on a file, then 
+            C-n/C-p to jump between
+            s/u to stage/unstage
+          more in :h fugitive-mappings
+        Gblame - straightforward
+        Gedit - opens readonly buffer of a git object
+          4 types of git object
             blob (file) - branch:path
             tree (list of ... things in the tree?)
             commit (eg @ or SHA)
@@ -73,22 +84,26 @@ vim
           this has a lot of features 
             filenames and SHAs: press enter to go to
             can diff and view other things
-        Gdiff ! index on left, working copy on right
+        Gdiff - index on left, working copy on right
           this is awesome with Gw for adding changes!!
           for conflicted merge, makes a 3 way split
+          [c and ]c jump between changes
           :diffget and :diffput on a visual selection/line count to stage hunks
+            NOTE: by default they only apply to the diff hunk! awesome!
             (diffput is stage)
             (better workflow: :do/:dp work on only one line (or the empty diff above).
              stay in the index buffer and use :do or range :diffget, since it makes more
              sense to be modifying the buffer you're in)
-        Gstatus 
-          :G also activates it 
-          can stage/unstage files with -
-          can open hunks with = on a file, then 
-            C-n/C-p to jump between
-            s/u to stage/unstage
-          more in :h fugitive-mappings
-        Gcommit (convenience wrapper)
+          3-way merge conflict resolution
+            probably keep cursor in the middle
+        Glog - shows all revisions of current file (in quickfix list)
+          p different from git log 
+          Glog -- opens all commits I think
+          Glog -- % is all commits that touched current buffer
+          copen opens quickfix window, then can jump to them
+        Gcommit - same as normal git commit
+        Ggrep - git grep but results go into quickfix window
+          git grep can search through all git branches/etc
         Gwrite (convenience, saves + adds to index)
         Gread (convenience, checkout from index)
         

@@ -192,7 +192,7 @@ let g:lightline.active = {
             \            [ 'percent' ] ] }
 let g:lightline.inactive = {
             \ 'left': [ [ 'mode', 'paste' ],
-            \           [ 'readonly', 'relativepath', 'gitbranch', 'modified' ] ],
+            \           [ 'readonly', 'relativepath', 'modified' ] ],
             \ 'right': [ [ 'lineinfo' ],
             \            [ 'percent' ] ] }
 " prevents showing eg '--insert--' in statusbar
@@ -208,11 +208,16 @@ let g:side_search_prg = 'ag '
 " Can use `vnew` or `new`
 let g:side_search_splitter = 'vnew'
 " I like 40% splits, change it if you don't
-let g:side_search_split_pct = 0.4
+let g:side_search_split_pct = 0.35
 
 " fugitive
-" this is supposed to delete fugitive buffers
+" this is supposed to cause fugitive buffers to be deleted after hidding
 autocmd BufReadPost fugitive://* set bufhidden=delete
+" causes these other types of annoying buffers to not stick around
+autocmd BufReadPost ~/.virtualenvs/* set bufhidden=delete
+autocmd BufReadPost ~/.vim/* set bufhidden=delete
+autocmd BufReadPost /usr/* set bufhidden=delete
+autocmd BufReadPost ~/Downloads/* set bufhidden=delete
 
 " ### CONNOR MISC SETTINGS ###
 
@@ -328,6 +333,7 @@ noremap <c-h> <c-w>h
 " noremap <c-h> <c-w>h | :vertical resize 111<CR>
 noremap <c-l> <c-w>l
 " noremap <c-l> <c-w>l | :vertical resize 110<CR>
+abbrev ct checktime
 
 
 
