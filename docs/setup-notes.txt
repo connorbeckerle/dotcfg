@@ -1,28 +1,15 @@
-reboot tasks...
-    oracle
-        echo 'startup' | rlsql / as sysdba
-        lsnrctl start
-        (shutdown db cmd is 'shutdown immediate')
-    couchbase
-        sudo systemctl start docker
-        sudo docker start db
-    rabbit
-        sudo /sbin/service rabbitmq-server start
-    ssh agent
-        source ~/.bash_profile
-
-    OLD:
-    kea/cassandra - TO DO - UPDATE
-        # sudo -u postgres -i
-        # postgres -D /var/lib/pgsql/data > logfile 2>&1 &
-        # (ctrl+d to exit postgres)
-        # sudo keactrl start
-        sudo systemctl start kea-dhcp4
-        sudo service cassandra start (if cassandra does not start on startup) 
-        sudo kea-ctrl-agent -c /opt/kea/etc/kea/kea-ctrl-agent.conf (if not started)
-    redshift
-        redshift -O 3500
-        redshift -O 6500 is default value
+reboot tasks... (copy and paste)
+    # oracle
+    echo 'startup' | rlsql / as sysdba
+    lsnrctl start
+    # (shutdown db cmd is 'shutdown immediate')
+    # couchbase
+    sudo systemctl start docker
+    sudo docker start db
+    # rabbit
+    sudo /sbin/service rabbitmq-server start
+    # ssh agent
+    source ~/.bash_profile
 
 fixing monitors
     xrandr -q shows status
@@ -69,6 +56,11 @@ rpm
 centos
     see version
         rpm -q centos-release
+
+gnome
+    if some gnome apps (like settings) freeze:
+        $ gnome-shell --replace
+        this restarts the window manager
 
 vim
     installation: 

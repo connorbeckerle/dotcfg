@@ -5,16 +5,19 @@
 "
 " plugins to try installing/using
 "   -- high priority -- 
-"   make <leader>/ do ag search on current file
+"   traces: https://github.com/markonm/traces.vim (highlights regexes better)
+"   sneak: https://github.com/justinmk/vim-sneak (2 char going forward/back)
+"   vim-abolish: https://github.com/tpope/vim-abolish
 "   vim-fugitive (look here for docs https://github.com/tpope/vim-fugitive)
 "       keep getting better at it 
-"   side search plugin or ctrlsf plugin for better codebase searching
 "   try ctrlsf instead of side search? 
 "       https://github.com/dyng/ctrlsf.vim
 "       might work better with ripgrep
 "       has edit-in-search-window
 "   try ripgrep instead of ag? 
 "       faster
+"       i/o is actually much slower tho : /
+"   try junegunn's bindings/more options for fzf eg https://github.com/junegunn/fzf.vim/issues/488
 "   black (formatting - https://github.com/ambv/black)
 "       try the different python3 config dir
 "       try installing with just python3
@@ -88,9 +91,7 @@ Plugin 'hdima/python-syntax'
 Plugin 'ZoomWin'  " this one is not performant lol
 " Plugin 'dkarter/bullets.vim'  " TODO - make this work
 Plugin 'ddrscott/vim-side-search'
-
 " color themes
-Plugin 'tomasr/molokai' " bad - not sure why not working
 Plugin 'NLKNguyen/papercolor-theme'
 " Plugin 'chriskempson/base16-vim'
 " Plugin 'altercation/vim-colors-solarized' " kinda lame
@@ -98,6 +99,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'junegunn/seoul256.vim'
 " Plugin 'Lokaltog/vim-distinguished'
 Plugin 'mtth/scratch.vim'
+Plugin 'markonm/traces.vim'
 
 
 
@@ -128,10 +130,17 @@ let g:ale_lint_on_insert_leave = 1
             " \       'trim_whitespace',
 let g:ale_fixers = {
             \   'python': [
-            \       'black',
-            \       ]
+            \       'remove_trailing_lines',
+            \       'trim_whitespace',
+            \       ],
             \   }
+            " \       'black',
+            " I want to use black sometime but for now just doing this
 let g:ale_python_black_options = '-l 100 -S'
+let g:ale_fix_on_save = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '>>'
+let g:ale_sign_info = '--'
 command! AF ALEFix
 
 " highlight extra whitespace - disabling for now. should be caught by linter
@@ -171,11 +180,48 @@ let g:ycm_filetype_blacklist = {
 nmap <C-_> gcc
 vmap <C-_> gc
 
-" fzf stuff
+" fzf bindings
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>f :Files<CR>
-nnoremap <leader>s :Lines<CR>
+nnoremap <leader>s :BLines<CR>
 nnoremap <leader>a :Ag<CR>
+" nnoremap <leader>r :Rg<CR>
+" enable the dict to make fzf colors match the color scheme
+let g:fzf_colors = 
+            \{}
+            " \ { 'fg':      ['fg', 'Normal'],
+            " \ 'bg':      ['bg', 'Normal'],
+            " \ 'hl':      ['fg', 'Comment'],
+            " \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+            " \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+            " \ 'hl+':     ['fg', 'Statement'],
+            " \ 'info':    ['fg', 'PreProc'],
+            " \ 'border':  ['fg', 'Ignore'],
+            " \ 'prompt':  ['fg', 'Conditional'],
+            " \ 'pointer': ['fg', 'Exception'],
+            " \ 'marker':  ['fg', 'Keyword'],
+            " \ 'spinner': ['fg', 'Label'],
+            " \ 'header':  ['fg', 'Comment'] }
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+" Augmenting Ag command using fzf#vim#with_preview function
+"   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
+"     * For syntax-highlighting, Ruby and any of the following tools are required:
+"       - Bat: https://github.com/sharkdp/bat
+"       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
+"       - CodeRay: http://coderay.rubychan.de/
+"       - Rouge: https://github.com/jneen/rouge
+"
+"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
+"   :Ag! - Start fzf in fullscreen and display the preview window above
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
 
 " gitgutter
 set updatetime=100 " update faster
@@ -253,10 +299,6 @@ noremap! <C-h> <C-w>
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set pastetoggle=<F3> " f3 to toggle paste mode
 set number relativenumber " good line numbers
-" edit vimrc with ev, reload with source
-nnoremap <leader>ev :e ~/.vimrc<CR>
-" refresh vimrc
-nnoremap <leader>lv :source ~/.vimrc<CR>
 " Bind nohl - removes highlight of your last search
 noremap <leader>d :nohl<CR>
 vnoremap <leader>d :nohl<CR>
@@ -333,7 +375,23 @@ noremap <c-h> <c-w>h
 " noremap <c-h> <c-w>h | :vertical resize 111<CR>
 noremap <c-l> <c-w>l
 " noremap <c-l> <c-w>l | :vertical resize 110<CR>
-abbrev ct checktime
+cabbrev ct checktime
+" J joins lines; L is the opposite (splits a Line)
+" NOTE: this is less than ideal because it leaves trailing whitespace. in the
+" future: can try to select it and remove it with eg "Vh:s/\%V //", or can try
+" to make a function that determines if char under cursor is a space and
+" removes if so.
+nnoremap L bwi<Enter><Esc>bw
+set nojoinspaces " no 2 space after period/etc
+" edit vimrc with :VimrcEdit
+command! -bar VimrcEdit e ~/.vimrc
+" reload vimrc with :VimrcReload
+command! -bar VimrcReload source ~/.vimrc
+" edit vimrc with ev, reload with source
+nnoremap <leader>ve :e ~/.vimrc<CR>
+" refresh vimrc
+nnoremap <leader>vl :source ~/.vimrc<CR>
+
 
 
 

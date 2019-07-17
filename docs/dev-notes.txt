@@ -1,9 +1,9 @@
 vim
+    important searching tip
+      eg: %s/^.*\("dhcp_lease_id": \d\+\).*$/\1/gc
+      https://stackoverflow.com/questions/34637021/vi-delete-everything-except-a-pattern
     save readonly file (without plugin, which has :SudoWrite):
         :w !sudo tee % 
-    moving tabs
-        :tabm <absolute position>
-        :tabm <+/-> <relative position>
     fzf
         search in..
             ,b: Buffers
@@ -14,6 +14,9 @@ vim
             ctrl-t: new tab
             ctrl-x: new split
             ctrl-v: new vsplit
+        useful stuff
+            when using Ag, can hit ? for a preview
+            :Commits is a useful thing
     windows/panes
         ctrl hkjl 
             moves b/w panes
@@ -25,6 +28,32 @@ vim
             kills buffer, restores last one
         ctrl-w r
             swap panes
+        :on [:only]
+            close other splits
+        :windo diffthis
+            diff 2 buffers
+            turn off with :windo diffoff (or just :diffoff)
+        reload all buffers:
+            ct [checktime] (custom cabbrev)
+    editing/navigation
+        ^
+          go to beginning of text on line!!
+        S
+          deletes content of line and goes into insert. useful!
+        J
+          joins lines
+        L
+          unjoins lines
+        =
+            auto-indent line
+            normally takes a motion, works on its own in visual mode, or == works on the line
+        count search matches:
+            :%s/pattern//gn (n is what makes it matter)
+            can also do  normal / search followed by :%s///gn
+        :%s/pattern//gn
+            count matches
+        :/\<query\>
+            searches for whole word
     misc
         :Vexplore
             gives you a file browser
@@ -34,27 +63,13 @@ vim
             previous file
         @@
             repeat macro
-        find matches: :%s/pattern//ng
-        reload all buffers:
-            checkt [checktime]
         motions inside things (eg in parens) can span multiple lines
         ctrl-z
             disable vim, drop to shell
             to resume vim (foreground): $ fg
-        =
-            auto-indent line
-            normally takes a motion, works on its own in visual mode, or == works on the line
-        count search matches:
-            :%s/pattern//gn (n is what makes it matter)
-            can also do  normal / search followed by :%s///gn
         %!python -m json.tool
             format json in open buffer
-        :only [:on]
-            close other splits
-        :windo diffthis
-            diff 2 buffers
-            turn off with :windo diffoff (or just :diffoff)
-    loclist - where ALE errors show 
+    loclist - where ALE errors show (and lots of other things)
         :lop - open
         :lcl - close (or :q?)
         :lne - next one
@@ -107,7 +122,6 @@ vim
         Gwrite (convenience, saves + adds to index)
         Gread (convenience, checkout from index)
         
-    setup as ide/fix plugins - deferred for later, using pycharm now
     has links to read sometime bored http://www.cse.psu.edu/~deh25/cmpsc311/Instructions/vi.html
     swap esc/caps: https://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc
         setxkbmap -option caps:swapescape
