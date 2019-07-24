@@ -392,6 +392,10 @@ general lessons
 
 
 linux tips
+    uniq
+        does not work as expected. only compares successive lines.
+        must use sort | uniq
+        or use sort -u
     interrupt a process nicely: kill -SIGINT
     diffing things nicely, 2 options:
         vim -d <things> (vimdiff)

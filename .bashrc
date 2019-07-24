@@ -31,6 +31,9 @@ alias xclipp="xclip -o"
 # gco is git checkout
 alias gco='git co $(gb)'
 
+# ag global ignore file
+alias ag='ag --path-to-ignore ~/.ignore'
+
 ### useful history settings ###
 # Make Bash append rather than overwrite the history on disk:
 shopt -s histappend
