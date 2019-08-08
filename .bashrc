@@ -46,7 +46,7 @@ export HISTFILESIZE=100000
 
 # better prompt:
 STARTCOLOR='\e[1;31m';
-ENDCOLOR="\e[1m"
+ENDCOLOR="\e[0m"
 PROMPT='\u@\h \W \$ '
 export PS1="$STARTCOLOR$PROMPT$ENDCOLOR"
 
