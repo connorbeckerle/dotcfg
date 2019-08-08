@@ -36,8 +36,6 @@ new proj setup guide
     pip install reqs
     git checkout --track origin/develop
     make new pycharm proj in the base folder for the proj
-    set proj interpreter as ~/.virtualenvs/<proj env>/bin/python (all versions are the same)
-        (easier to do after making the proj with the base interpreter)
 
 
 ### resources

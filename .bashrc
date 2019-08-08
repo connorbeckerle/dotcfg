@@ -43,6 +43,15 @@ export HISTSIZE=100000
 export HISTFILESIZE=100000
 
 
+
+# better prompt:
+STARTCOLOR='\e[1;31m';
+ENDCOLOR="\e[1m"
+PROMPT='\u@\h \W \$ '
+export PS1="$STARTCOLOR$PROMPT$ENDCOLOR"
+
+
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc

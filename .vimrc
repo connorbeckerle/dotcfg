@@ -88,7 +88,6 @@ Plugin 'dhruvasagar/vim-prosession'
 "Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
 Plugin 'hdima/python-syntax'
 " Plugin 'ambv/black'  " need to fix python3 support
-Plugin 'ZoomWin'  " this one is not performant lol
 " Plugin 'dkarter/bullets.vim'  " TODO - make this work
 Plugin 'ddrscott/vim-side-search'
 " color themes
@@ -233,7 +232,7 @@ let g:lightline = {
             \   'gitbranch': 'fugitive#head'} }
 let g:lightline.active = {
             \ 'left': [ [ 'mode', 'paste' ],
-            \           [ 'readonly', 'relativepath', 'gitbranch', 'modified' ] ],
+            \           [ 'readonly', 'relativepath', 'modified' ] ],
             \ 'right': [ [ 'lineinfo' ],
             \            [ 'percent' ] ] }
 let g:lightline.inactive = {
@@ -341,7 +340,7 @@ set foldmethod=indent
 set foldlevel=99
 set scrolloff=3
 " vertical diffs by default
-set diffopt+=vertical
+set diffopt+=vertical,algorithm:patience
 " this is good.
 nnoremap ; :
 nnoremap ;; ;
@@ -381,7 +380,7 @@ cabbrev ct checktime
 " future: can try to select it and remove it with eg "Vh:s/\%V //", or can try
 " to make a function that determines if char under cursor is a space and
 " removes if so.
-nnoremap L bwi<Enter><Esc>bw
+nnoremap L i<Enter><Esc>bw
 set nojoinspaces " no 2 space after period/etc
 " edit vimrc with :VimrcEdit
 command! -bar VimrcEdit e ~/.vimrc
@@ -391,8 +390,22 @@ command! -bar VimrcReload source ~/.vimrc
 nnoremap <leader>ve :e ~/.vimrc<CR>
 " refresh vimrc
 nnoremap <leader>vl :source ~/.vimrc<CR>
+" * doesn't jump to the next match
+" nnoremap * :keepjumps normal! mi*`i<CR> 
+" THIS WORKS BETTER (doesn't reset scroll position)
+nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+" this prevents the annoying delay on exiting insert mode
+set ttimeoutlen=5
 
 
+" reloads lightline on reloading vimrc
+command! LightlineReload call LightlineReload()
+function! LightlineReload()
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+endfunction
+LightlineReload
 
 
 " experimental stuff here!

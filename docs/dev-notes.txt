@@ -28,7 +28,7 @@ vim
             kills buffer, restores last one
         ctrl-w r
             swap panes
-        :on [:only]
+        ctrl-w ctrl-o :on [:only]
             close other splits
         :windo diffthis
             diff 2 buffers
@@ -88,7 +88,10 @@ vim
             C-n/C-p to jump between
             s/u to stage/unstage
           more in :h fugitive-mappings
-        Gblame - straightforward
+        Gblame - useful view of blame. can step through history of a line
+          g? - brings up help
+          - - (minus sign) - reblames at this commit
+          P - reblames at the parent of this commit (eg its head)
         Gedit - opens readonly buffer of a git object
           4 types of git object
             blob (file) - branch:path
