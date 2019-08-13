@@ -49,6 +49,7 @@ STARTCOLOR='\e[1;31m';
 ENDCOLOR="\e[0m"
 PROMPT='\u@\h \W \$ '
 export PS1="$STARTCOLOR$PROMPT$ENDCOLOR"
+export PS1="[\u@\h \W]\$ "
 
 
 
