@@ -25,15 +25,20 @@ kibana
     ex query: component_name:docsis_adapter AND LOGCATEGORY:OUT AND NOT STATUS:COMPLETE AND  COMPONENTPAYLOAD:"*state mismatch*"
     in general, booleans need to be capitalized, parens needed if ambig
 
+new computer setup guide
+    install python3.5 somehow, with related things - 
+      yum, centos-sclo-rh?, rh-python35-python, rh-python35-python-pip, etc
+    alias pip
+    pip --user install virtualenv virtualenvwrapper
+    
 new proj setup guide
-    make a dir in ~/programming, go into it
-    git clone, go into that
+    mkvirtualenv {proj_name} && setvirtualenvproject && pip install pip==9.0.1 && pip install -r requirements/ci.txt
+    # go into ~/src/, git clone, go into that
     mkvirtualenv <name>
     setvirtualenvproject
-    fix pip
-        install 9.0.1
-        get the pip.conf from the other virtualenv
-    pip install reqs
+    pip install pip==9.0.1
+    # get the pip.conf from the other virtualenv
+    # pip install reqs
     git checkout --track origin/develop
     make new pycharm proj in the base folder for the proj
 
@@ -177,3 +182,19 @@ keyboard remap for context key
 
 windownow
     ini setup file at ~/.windowNow.ini. remove to reset hotkey
+
+
+installing CB
+  https://developer.couchbase.com/documentation/server/current/install/install-swap-space.html 
+  https://docs.couchbase.com/server/6.0/install/install-swap-space.html
+  Please note that you have to update your firewall configuration to
+  allow connections to the following ports:
+    4369, 8091 to 8094, 9100 to 9105, 9998, 9999, 11207, 11209 to 11211,
+    11214, 11215, 18091 to 18093, and from 21100 to 21299.
+  NOTES ON HOW TO DO:
+    here: https://docs.couchbase.com/server/current/install/rhel-suse-install-intro.html#installing-using-yum
+    COMMANDS:
+      curl -O http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-5-x86_64.rpm
+      sudo rpm -i couchbase-release-1.0-5-x86_64.rpm
+      sudo yum update
+      sudo yum install couchbase-server-community-5.1.1 libcouchbase-devel

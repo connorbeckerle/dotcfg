@@ -366,8 +366,9 @@ pip
         right now, just add to trustedhost (edit pip conf)
         later, use Sauls' method - copy TDS CAs to {virtual_env}/lib/python3.5/site-packages/pip/_vendor/certifi/cacert.pem (but has to be done for each virtualenv)
     pip.conf locations:
-        ... see the docs... doing it all in virtualenv
-        $VIRTUAL_ENV/pip.conf
+        storing global one in /home/usryzd/.config/pip/pip.conf, see pip docs
+        -- remove - ... see the docs... doing it all in virtualenv
+        -- remove - $VIRTUAL_ENV/pip.conf
         https://pip.pypa.io/en/stable/user_guide/#config-file
     'no module named pip.req':
         use 9.0.1 (pip install pip==9.0.1)

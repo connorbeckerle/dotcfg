@@ -70,10 +70,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " PLUGINS GO HERE. NOTE: !!!! don't forget to run :PluginInstall after adding new one
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'ycm-core/YouCompleteMe'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'w0rp/ale'
-" Plugin 'nvie/vim-flake8'  " superseded by ale
 Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
@@ -83,9 +82,9 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-eunuch'
+" these two manage sessions really nicely
 Plugin 'tpope/vim-obsession'
 Plugin 'dhruvasagar/vim-prosession'
-"Plugin 'vim-python/python-syntax' " not sure what this does beyond normally..
 Plugin 'hdima/python-syntax'
 " Plugin 'ambv/black'  " need to fix python3 support
 " Plugin 'dkarter/bullets.vim'  " TODO - make this work
@@ -159,20 +158,38 @@ colorscheme PaperColor
 " youcompleteme
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" unmap this for certain files
+" unmap this for certain files:
 autocmd FileType help   noremap <buffer> <C-]> <C-]>
-" ycm virtualenv python support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
 let g:ycm_filetype_blacklist = {
             \ 'txt': 1,
             \ 'help': 1}
+" ycm virtualenv python support
+let g:ycm_python_interpreter_path = ''
+let g:ycm_python_sys_path = []
+let g:ycm_extra_conf_vim_data = [
+  \  'g:ycm_python_interpreter_path',
+  \  'g:ycm_python_sys_path'
+  \]
+let g:ycm_global_ycm_extra_conf = '~/vim/.ycm_extra_conf.py'
+" ycm virtualenv python support - OLD
+" py << EOF
+" import os
+" import sys
+" if 'VIRTUAL_ENV' in os.environ:
+"   project_base_dir = os.environ['VIRTUAL_ENV']
+"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"   execfile(activate_this, dict(__file__=activate_this))
+" EOF
+
+" completor
+" let g:completor_python_binary = '/usr/local/bin/python3.5'
+" let g:completor_filesize_limit = 2048
+" let g:completor_completion_delay = 5
+" noremap <silent> <C-]> :call completor#do('definition')<CR>
+" noremap <C-]> :call completor#do('definition')<CR>
+" noremap <silent> <leader>c :call completor#do('doc')<CR>
+" noremap <silent> <leader>f :call completor#do('format')<CR>
+" noremap <silent> <leader>s :call completor#do('hover')<CR>
 
 " commentary - remap ctrl-/ to comment
 " nmap <C-_> gcc  j  " idk why this doesn't work
@@ -256,7 +273,7 @@ let g:side_search_splitter = 'vnew'
 let g:side_search_split_pct = 0.35
 
 " fugitive
-" this is supposed to cause fugitive buffers to be deleted after hidding
+" this is supposed to cause fugitive buffers to be deleted after hiding
 autocmd BufReadPost fugitive://* set bufhidden=delete
 " causes these other types of annoying buffers to not stick around
 autocmd BufReadPost ~/.virtualenvs/* set bufhidden=delete
@@ -348,8 +365,14 @@ nnoremap ;; ;
 set laststatus=2
 " delete current buffer and previous buffer to that window
 command! BC b#<bar>bd# 
-" ,c copies text to clipboard
-vnoremap <leader>c :w !xclip -i -sel c<CR><CR>
+" X11 forwarding for copy/paste
+" ,y copies, ,p pastes
+" vnoremap <leader>y :'<,'>w !xclip<CR>
+vnoremap <leader>y "yy <bar> :call system('xclip', @y)<CR>
+noremap <leader>p :r!xclip -o<CR>
+" note - <C-o> escapes 1 normal command from insert mode
+inoremap <leader>p <C-o>:let @y = system('xclip -o')<CR><C-r>y
+
 " changes to current buffer's dir. -bar says you can concatenate commands with a |
 command! -bar CurrDir cd %:p:h 
 " assumes fast connection to make more responsive
@@ -396,6 +419,15 @@ nnoremap <leader>vl :source ~/.vimrc<CR>
 nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " this prevents the annoying delay on exiting insert mode
 set ttimeoutlen=5
+"smart indent when entering insert mode with i on empty lines
+function! IndentWithI()
+    if len(getline('.')) == 0
+        return "\"_cc"
+    else
+        return "i"
+    endif
+endfunction
+nnoremap <expr> i IndentWithI()
 
 
 " reloads lightline on reloading vimrc

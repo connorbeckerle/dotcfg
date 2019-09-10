@@ -1,15 +1,17 @@
 ### Connor aliases ### 
 alias python3=python3.5
-alias ipy=ipython
-alias pip2='python2 -m pip'
+alias python=python3.5
 alias py=python3.5
+alias ipy=ipython
+alias pip='python3.5 -m pip'
+alias pip2='python2 -m pip'
 
 # these are bad - keep them out
 # alias python=python3.5
 # alias pip=pip3.5
 alias black='python3.6 -m black'
 
-alias pj='py ~/programming/scripts/tools/nice_json_tool.py'
+alias pj='py ~/src/misc/scripts/tools/nice_json_tool.py'
 alias macformat='py ~/programming/scripts/tools/fmt_mac.py'
 
 # dumb
@@ -17,9 +19,10 @@ alias maek=make
 alias mkae=make
 alias amke=make
 
-export VIRTUALENVWRAPPER_PYTHON=/bin/python3.5
-export VIRTUALENVWRAPPER_VIRTUALENV=/bin/virtualenv
-alias pycharm=/home/usryzd/Downloads/pycharm-community-2018.1.1/bin/pycharm.sh
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.5
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/src
+source /home/usryzd/.local/bin/virtualenvwrapper.sh
 
 # plz = sudo !! = sudo prev cmd
 alias plz='sudo $(fc -ln -1)'
@@ -33,6 +36,13 @@ alias gco='git co $(gb)'
 
 # ag global ignore file
 alias ag='ag --path-to-ignore ~/.ignore'
+
+# couchbase cli
+alias cb='/opt/couchbase/bin/couchbase-cli'
+alias cbq='/opt/couchbase/bin/cbq -u Administrator -p password'
+
+# docsis stuff
+alias docsis='/home/usryzd/src/bxe-docsis-encoder/deployed/docsis-install-exec/bin/docsis'
 
 ### useful history settings ###
 # Make Bash append rather than overwrite the history on disk:
@@ -48,7 +58,9 @@ export HISTFILESIZE=100000
 STARTCOLOR='\e[1;31m';
 ENDCOLOR="\e[0m"
 PROMPT='\u@\h \W \$ '
-export PS1="$STARTCOLOR$PROMPT$ENDCOLOR"
+# this has problems with colors
+# export PS1="$STARTCOLOR$PROMPT$ENDCOLOR"
+# export PS1="[\u@\h \W]\$ "
 
 
 
@@ -61,9 +73,6 @@ fi
 # export SYSTEMD_PAGER=
 
 # User specific aliases and functions
-
-source /bin/virtualenvwrapper.sh
-
 
 ### Oracle Settings ###
 ORACLE_UNQNAME=orcl
