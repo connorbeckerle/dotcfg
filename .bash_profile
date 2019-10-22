@@ -11,5 +11,5 @@ PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
 export PATH
 
-eval `keychain --timeout 10080 --agents ssh --eval id_rsa`
+eval `keychain --timeout 10080 --agents ssh,gpg --eval id_rsa DF022AA0`
 

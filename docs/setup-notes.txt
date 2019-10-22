@@ -11,6 +11,13 @@ reboot tasks... (copy and paste)
     # ssh agent
     source ~/.bash_profile
 
+new oracle
+  user/password: oracle
+  need to su oracle to do anything like 
+    sqlplus orcl as sysdba
+    sqlplus / as sysdba
+
+  
 fixing monitors
     xrandr -q shows status
     if 2nd display doesn't show up... try replugging kvm
@@ -114,6 +121,8 @@ couchbase
         https://git.ent.tds.net/BxE/tds-snap-collector/wikis/home
     error like "keyerror getting self._path2confmods[path]" caused by "bxe_couchbase_utility.exceptions.BadCfEngineConf: cluster config file malformed: data of type <class 'str'>:"
         this is caused by couchbase creds in :::: format, when they should be in yaml format
+    error like "client not bootstrapped" (generic connection error) - 
+        check username, password, cluster name, bucket name
 
 virtualenvwrapper
     https://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html

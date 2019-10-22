@@ -37,6 +37,9 @@ alias gco='git co $(gb)'
 # ag global ignore file
 alias ag='ag --path-to-ignore ~/.ignore'
 
+# bat is better cat
+alias bat='/usr/local/bat/bat'
+
 # couchbase cli
 alias cb='/opt/couchbase/bin/couchbase-cli'
 alias cbq='/opt/couchbase/bin/cbq -u Administrator -p password'
@@ -62,6 +65,10 @@ PROMPT='\u@\h \W \$ '
 # export PS1="$STARTCOLOR$PROMPT$ENDCOLOR"
 # export PS1="[\u@\h \W]\$ "
 
+# reset DISPLAY easily: (doesn't work...)
+# from https://goosebearingbashshell.github.io/2017/12/07/reset-display-variable-in-tmux.html
+# and the cmd does work in shell
+# alias display-reset=eval `export DISPLAY="`tmux show-env | sed -n 's/^DISPLAY=//p'`"`
 
 
 # Source global definitions
@@ -76,13 +83,14 @@ fi
 
 ### Oracle Settings ###
 ORACLE_UNQNAME=orcl
-ORACLE_BASE=/u01/app/usryzd
-ORACLE_HOME=$ORACLE_BASE/product/12.2.0/dbhome_1
 ORACLE_SID=orcl
+ORACLE_BASE=/u01/app/oracle
+ORACLE_HOME=$ORACLE_BASE/product/12.1.2/dbhome_1
 PATH=$PATH:$ORACLE_HOME/bin
 export ORACLE_HOME
 export ORACLE_SID
 export PATH
+export LD_LIBRARY_PATH='/usr/lib/oracle/19.3/client64/lib'
 alias rlsql='rlwrap sqlplus'
 
 ### Kea settings ###
@@ -97,3 +105,7 @@ bind -x '"\C-e": fzf-file-widget'
 
 # required thing for ~/.dotcfg file
 alias config='/usr/bin/git --git-dir=/home/usryzd/.dotcfg/ --work-tree=/home/usryzd'
+
+# gpg is supposed to have this for some reason
+GPG_TTY=$(tty)
+export GPG_TTY

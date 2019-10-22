@@ -102,7 +102,7 @@ vim
           this has a lot of features 
             filenames and SHAs: press enter to go to
             can diff and view other things
-        Gdiff - index on left, working copy on right
+        Gdiffsplit - index on left, working copy on right
           this is awesome with Gw for adding changes!!
           for conflicted merge, makes a 3 way split
           [c and ]c jump between changes
@@ -333,8 +333,10 @@ some misc thoughts:
             and if/else/etc statements). not rapid-fire ones in random places
 
 bash
+    to use vi mode history scroll, hit ESC then j/k, not arrow keys
     to not save history, do this:
         $ unset HISTFILE
+    to delete from history, can run history -d
 
 tmux
     http://www.dayid.org/comp/tm.html

@@ -14,21 +14,17 @@
 "       https://github.com/dyng/ctrlsf.vim
 "       might work better with ripgrep
 "       has edit-in-search-window
-"   try ripgrep instead of ag? 
-"       faster
-"       i/o is actually much slower tho : /
 "   try junegunn's bindings/more options for fzf eg https://github.com/junegunn/fzf.vim/issues/488
 "   black (formatting - https://github.com/ambv/black)
 "       try the different python3 config dir
 "       try installing with just python3
 "   alefix
 "       get more tools (like black)
-"       make autofix on save
 "
 "   -- low priority -- 
 "   janko vim-test - run tests from in vim
 "   splitjoin https://github.com/AndrewRadev/splitjoin.vim
-"   nerdtree
+"   nerdtree - meh
 "   Plugin 'tmhedberg/SimpylFold'
 "   Plugin 'Konfekt/FastFold'
 "   vim-notes - https://github.com/xolox/vim-notes
@@ -89,15 +85,16 @@ Plugin 'hdima/python-syntax'
 " Plugin 'ambv/black'  " need to fix python3 support
 " Plugin 'dkarter/bullets.vim'  " TODO - make this work
 Plugin 'ddrscott/vim-side-search'
+Plugin 'mtth/scratch.vim'
+Plugin 'markonm/traces.vim'
+Plugin 'tmhedberg/SimpylFold'
+
 " color themes
 Plugin 'NLKNguyen/papercolor-theme'
-" Plugin 'chriskempson/base16-vim'
 " Plugin 'altercation/vim-colors-solarized' " kinda lame
 Plugin 'morhetz/gruvbox'
 Plugin 'junegunn/seoul256.vim'
 " Plugin 'Lokaltog/vim-distinguished'
-Plugin 'mtth/scratch.vim'
-Plugin 'markonm/traces.vim'
 
 
 
@@ -280,6 +277,7 @@ autocmd BufReadPost ~/.virtualenvs/* set bufhidden=delete
 autocmd BufReadPost ~/.vim/* set bufhidden=delete
 autocmd BufReadPost /usr/* set bufhidden=delete
 autocmd BufReadPost ~/Downloads/* set bufhidden=delete
+autocmd BufReadPost '[No Name]' set bufhidden=delete
 
 " ### CONNOR MISC SETTINGS ###
 
@@ -305,6 +303,7 @@ augroup END
 inoremap jk <esc>
 inoremap Jk <esc>
 inoremap JK <esc>
+inoremap jK <esc>
 set background=dark
 set encoding=utf-8
 set hidden " closing buffers now usually hides them instead of closing them. important!
@@ -321,8 +320,6 @@ vnoremap <leader>d :nohl<CR>
 " ipdb shortcut
 nnoremap <leader>pdb Oimport ipdb; ipdb.set_trace()<Esc>
 nnoremap <leader>pyt Oimport pytest; pytest.set_trace()<Esc>
-" open terminal
-nnoremap <leader>t :terminal<CR>
 " Y yanks to end of line like it should
 noremap Y y$
 set history=700
@@ -351,7 +348,8 @@ set winminheight=5
 set winminwidth=12
 set splitbelow
 set splitright
-" Enable folding with spacebar
+" Enable folding with spacebar. note: z is visually 'folded'
+" zM/zR fold/unfold all
 noremap <space> za
 set foldmethod=indent
 set foldlevel=99
@@ -392,11 +390,28 @@ nnoremap > >>
 " bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
 noremap <c-j> <c-w>j
 noremap <c-k> <c-w>k
-" TODO - resizing is good for laptop. probably make it smarter
+" split auto-resizing for laptop usage
+" by default, no resizing
+let g:ResizePaneToggleState=0
 noremap <c-h> <c-w>h
-" noremap <c-h> <c-w>h | :vertical resize 111<CR>
 noremap <c-l> <c-w>l
-" noremap <c-l> <c-w>l | :vertical resize 110<CR>
+command! ResizePaneToggle call ResizePaneToggle()
+function! ResizePaneToggle()
+    " sets/resets resizing the active pane, for small screens
+    " 0 means no resizing; 1 means auto-resizing
+    let g:ResizePaneToggleState = !g:ResizePaneToggleState
+    if !g:ResizePaneToggleState
+        noremap <c-h> <c-w>h
+        noremap <c-l> <c-w>l
+        :normal =
+        echom 'window resizing off'
+    else
+        noremap <c-h> <c-w>h | :vertical resize 100<CR>
+        noremap <c-l> <c-w>l | :vertical resize 100<CR>
+        :vertical resize 100
+        echom 'window resizing on'
+    endif
+endfunction
 cabbrev ct checktime
 " J joins lines; L is the opposite (splits a Line)
 " NOTE: this is less than ideal because it leaves trailing whitespace. in the
@@ -419,16 +434,18 @@ nnoremap <leader>vl :source ~/.vimrc<CR>
 nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " this prevents the annoying delay on exiting insert mode
 set ttimeoutlen=5
-"smart indent when entering insert mode with i on empty lines
-function! IndentWithI()
+" smart indent when entering insert mode with i on empty lines
+function! IndentWithA()
+    " technically, with 'a'.
     if len(getline('.')) == 0
         return "\"_cc"
     else
-        return "i"
+        return "a"
     endif
 endfunction
-nnoremap <expr> i IndentWithI()
-
+nnoremap <expr> a IndentWithA()
+" netrw open in horiz split
+let g:netrw_browse_split = 1
 
 " reloads lightline on reloading vimrc
 command! LightlineReload call LightlineReload()
@@ -440,7 +457,51 @@ endfunction
 LightlineReload
 
 
+
 " experimental stuff here!
+"
+function SmoothScroll(up)
+    if a:up
+        let scrollaction=""
+    else
+        let scrollaction=""
+    endif
+    exec "normal " . scrollaction
+    redraw
+    let counter=1
+    while counter<&scroll
+        let counter+=1
+        sleep 3m
+        redraw
+        exec "normal " . scrollaction
+    endwhile
+endfunction
+
+" NOTE - this is pretty bad - it just remaps up/down which I don't like
+" nnoremap <C-U> :call SmoothScroll(1)<Enter>
+" nnoremap <C-D> :call SmoothScroll(0)<Enter>
+" inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
+" inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
+" deletes stupid [No Name] buffers left by netrw I guess
+command! DeleteEmptyBuffers call DeleteEmptyBuffers()
+function! DeleteEmptyBuffers()
+    let [i, n; empty] = [1, bufnr('$')]
+    while i <= n
+        if bufexists(i) && bufname(i) == ''
+            call add(empty, i)
+        endif
+        let i += 1
+    endwhile
+    echom 'deleting buffers:' empty
+    if len(empty) > 0
+        exe 'bdelete' join(empty)
+    endif
+endfunction
+
+command! TestF call TestF()
+function! TestF()
+    echo 'asdf'
+endfunction
 
 
 
