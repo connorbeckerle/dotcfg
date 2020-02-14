@@ -179,6 +179,9 @@ couchbase/N1QL
         select meta(ossstatic_data).id, * 
         from `ossstatic_data`
         where  contains(meta(ossstatic_data).id, "142D27C13C83")
+    some good looking performance articles with n1ql
+      https://dzone.com/articles/a-deep-dive-into-couchbase-n1ql-query-optimization
+      https://dzone.com/articles/new-performance-tricks-with-n1ql
 
 restview
     workon misc, restview <path-to-file>
@@ -258,6 +261,7 @@ python general
         https://gist.github.com/datagrok/40bf84d5870c41a77dc6
     to start debugger on breakpoint:
         python -m pdb -c continue myscript.py
+        EXITING DEBUGGER WHEN MISBEHAVING: import os; os._exit(0)
     things to try:
       pysnooper: https://github.com/cool-RR/pysnooper
     profiling performance
@@ -340,6 +344,7 @@ bash
 
 tmux
     http://www.dayid.org/comp/tm.html
+    prefix ctrl-o - rotate-window (flip pane layout)
     tmux a - attach to most recent session
     tmux a -t <sessname> - attach to <sessname> session
     prefix d - detach (save session)
@@ -353,6 +358,13 @@ tmux
     prefix :setw synchronize-panes on/off - synchronize panes!!
 
 
+gpg
+    agent stuff
+        should usually work normally. sometimes it doesn't. 
+            $ killall gpg
+            $ killall gpg-agent
+            until they're all gone
+        then it will restart automatically on next shell startup
 ssh
     agent stuff
         useful resources: 
@@ -428,10 +440,13 @@ linux tips
       https://touhidshaikh.com/blog/?p=790
       but basically:
         sudo -l to see a cmd you can sudo like less or vim
-        run less as sudo
-        type !sh<enter>, and you're root!
+        formerly:
+          run less as sudo ($ sudo /usr/bin/less /etc/httpd/conf/httpd.conf)
+          type !sh<enter>, and you're root!
+        now:
+          need to use crontab.. ($ sudo /usr/bin/crontab -u saitnap1 -e)
       on deployed servers:
         [sudo -l to see a valid less command]
-        sudo /usr/bin/less /etc/httpd/conf/httpd.conf
-        run !sh<enter>
+        sudo /usr/bin/crontab -u saitnap1 -e
+        run :sh<enter>
         su daitnap1

@@ -78,6 +78,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-abolish'
 " these two manage sessions really nicely
 Plugin 'tpope/vim-obsession'
 Plugin 'dhruvasagar/vim-prosession'
@@ -168,25 +169,6 @@ let g:ycm_extra_conf_vim_data = [
   \  'g:ycm_python_sys_path'
   \]
 let g:ycm_global_ycm_extra_conf = '~/vim/.ycm_extra_conf.py'
-" ycm virtualenv python support - OLD
-" py << EOF
-" import os
-" import sys
-" if 'VIRTUAL_ENV' in os.environ:
-"   project_base_dir = os.environ['VIRTUAL_ENV']
-"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"   execfile(activate_this, dict(__file__=activate_this))
-" EOF
-
-" completor
-" let g:completor_python_binary = '/usr/local/bin/python3.5'
-" let g:completor_filesize_limit = 2048
-" let g:completor_completion_delay = 5
-" noremap <silent> <C-]> :call completor#do('definition')<CR>
-" noremap <C-]> :call completor#do('definition')<CR>
-" noremap <silent> <leader>c :call completor#do('doc')<CR>
-" noremap <silent> <leader>f :call completor#do('format')<CR>
-" noremap <silent> <leader>s :call completor#do('hover')<CR>
 
 " commentary - remap ctrl-/ to comment
 " nmap <C-_> gcc  j  " idk why this doesn't work

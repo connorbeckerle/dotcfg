@@ -1,50 +1,45 @@
-### Connor aliases ### 
+### convenience aliases ###
+# python versions
 alias python3=python3.5
 alias python=python3.5
 alias py=python3.5
 alias ipy=ipython
 alias pip='python3.5 -m pip'
 alias pip2='python2 -m pip'
-
-# these are bad - keep them out
-# alias python=python3.5
-# alias pip=pip3.5
-alias black='python3.6 -m black'
-
-alias pj='py ~/src/misc/scripts/tools/nice_json_tool.py'
-alias macformat='py ~/programming/scripts/tools/fmt_mac.py'
-
+# plz = sudo !! = sudo prev cmd
+alias plz='sudo $(fc -ln -1)'
+# pipe into useful clipboard more easily
+alias xclipc="xclip -selection c"
+alias xclipp="xclip -o"
+# ag global ignore file
+alias ag='ag --path-to-ignore ~/.ignore'
+# tmux attach
+alias tm='tmux a -t'
 # dumb
 alias maek=make
 alias mkae=make
 alias amke=make
+# black
+alias black='python3.6 -m black'
+# my own tools
+alias pj='py ~/src/misc/scripts/tools/nice_json_tool.py'
+alias macformat='py ~/src/misc/scripts/tools/fmt_mac.py'
 
+# virtualenvwrapper
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.5
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/src
 source /home/usryzd/.local/bin/virtualenvwrapper.sh
+alias editvenvvars='vi -O $VIRTUAL_ENV/bin/postactivate $VIRTUAL_ENV/bin/postdeactivate'
 
-# plz = sudo !! = sudo prev cmd
-alias plz='sudo $(fc -ln -1)'
 
-# pipe into useful clipboard more easily
-alias xclipc="xclip -selection c"
-alias xclipp="xclip -o"
-
-# gco is git checkout
-alias gco='git co $(gb)'
-
-# ag global ignore file
-alias ag='ag --path-to-ignore ~/.ignore'
-
+### useful binaries ###
 # bat is better cat
 alias bat='/usr/local/bat/bat'
-
 # couchbase cli
 alias cb='/opt/couchbase/bin/couchbase-cli'
 alias cbq='/opt/couchbase/bin/cbq -u Administrator -p password'
-
-# docsis stuff
+# docsis encoder
 alias docsis='/home/usryzd/src/bxe-docsis-encoder/deployed/docsis-install-exec/bin/docsis'
 
 ### useful history settings ###
@@ -54,8 +49,6 @@ shopt -s histappend
 export HISTCONTROL=ignoredups
 export HISTSIZE=100000
 export HISTFILESIZE=100000
-
-
 
 # better prompt:
 STARTCOLOR='\e[1;31m';
@@ -101,7 +94,10 @@ export PATH=$PATH:/opt/kea/sbin
 # required for fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.git.bash ] && . ~/.git.bash
-bind -x '"\C-e": fzf-file-widget'
+# bind -x '"\C-e": fzf-file-widget'  # Used to have this, but don't use it.
+# export FZF_COMPLETION_TRIGGER='**'  # previously '**'
+# bind -x '"\C-e": fzf-completion'
+# alias ='fzf-completion'
 
 # required thing for ~/.dotcfg file
 alias config='/usr/bin/git --git-dir=/home/usryzd/.dotcfg/ --work-tree=/home/usryzd'

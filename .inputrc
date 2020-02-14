@@ -1,16 +1,16 @@
 # apparently this is useful?
 $include /etc/inputrc
 
-# dumb bell
+# hate this with my life
 set bell-style none
 
-# vim 
+# vim in bash, super useful
 set editing-mode vi
 set keymap vi
-
 set keymap vi-insert
+# I don't use this now that I swap caps-escape
 "jk": vi-movement-mode
 
 # change ctrl+backspace to delete prev alphanum word
-# needs to be after vi-stuff
+# needs to be after vi stuff
 "\C-H": backward-kill-word
