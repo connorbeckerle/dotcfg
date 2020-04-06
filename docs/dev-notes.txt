@@ -104,7 +104,7 @@ vim
             can diff and view other things
         Gdiffsplit - index on left, working copy on right
           this is awesome with Gw for adding changes!!
-          for conflicted merge, makes a 3 way split
+          for conflicted merge, make a 3 way split with :Gdiffsplit!
           [c and ]c jump between changes
           :diffget and :diffput on a visual selection/line count to stage hunks
             NOTE: by default they only apply to the diff hunk! awesome!
@@ -403,11 +403,12 @@ general lessons
     for couchbase), DBWriter (still bad, uses a rabbit queue)
   figure out everyone else's business requirements! can't just make APIs to spec as written!
     this has bitten me .... 3 times or so and caused a headache each time
+  write APIs/endpoints/queue outputs for what makes sense for the service - do NOT write 
+    bespoke, non-generic, specific endpoints for people who ask for them!
   when taking over a project, particularly one that isn't evidently proven to work, have to go 
     over everything with a fine-tooth comb... no part of IPT has worked properly in any way so far.
   when writing scripts, real logging, real argparsing, and crash resilience are all really helpful
     to have as boilerplate
-
 
 linux tips
     uniq

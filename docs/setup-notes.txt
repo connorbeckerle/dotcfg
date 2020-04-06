@@ -127,6 +127,7 @@ couchbase
 virtualenvwrapper
     https://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html
     to set project home - setvirtualenvproject in dir
+    to edit environment variables easily - alias editvenvvars
 
 pycharm
     when making new proj in pycharm:

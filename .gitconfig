@@ -12,4 +12,4 @@
 	co = checkout
     br = branch
     log3 = "!git log -n 3"
-    sidediff = "!git log --left-right --graph --cherry-mark --oneline "
+    diffside = "!git log --left-right --graph --cherry-mark --oneline "

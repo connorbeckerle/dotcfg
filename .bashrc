@@ -94,7 +94,7 @@ export PATH=$PATH:/opt/kea/sbin
 # required for fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.git.bash ] && . ~/.git.bash
-# bind -x '"\C-e": fzf-file-widget'  # Used to have this, but don't use it.
+bind -x '"\C-e": fzf-file-widget'
 # export FZF_COMPLETION_TRIGGER='**'  # previously '**'
 # bind -x '"\C-e": fzf-completion'
 # alias ='fzf-completion'
