@@ -22,7 +22,8 @@ alias amke=make
 # black
 alias black='python3.6 -m black'
 # my own tools
-alias pj='py ~/src/misc/scripts/tools/nice_json_tool.py'
+alias pyj='python -m json.tool'  # python json
+alias pj='py ~/src/misc/scripts/tools/nice_json_tool.py'  # pretty print json
 alias macformat='py ~/src/misc/scripts/tools/fmt_mac.py'
 
 # virtualenvwrapper

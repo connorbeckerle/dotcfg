@@ -409,6 +409,7 @@ general lessons
     over everything with a fine-tooth comb... no part of IPT has worked properly in any way so far.
   when writing scripts, real logging, real argparsing, and crash resilience are all really helpful
     to have as boilerplate
+  on errors that shouldn't happen: fail loudly. do NOT just log it.
 
 linux tips
     uniq
