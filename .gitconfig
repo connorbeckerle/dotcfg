@@ -13,3 +13,6 @@
     br = branch
     log3 = "!git log -n 3"
     diffside = "!git log --left-right --graph --cherry-mark --oneline "
+[user]
+	email = connorbeckerle@gmail.com
+	name = Connor Beckerle

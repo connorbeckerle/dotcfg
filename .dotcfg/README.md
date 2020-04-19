@@ -1,6 +1,7 @@
 dotfiles!
 
 https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
+https://www.atlassian.com/git/tutorials/dotfiles
 
 To migrate to new system:
 1. set up alias in .bashrc, run in current shell scope
