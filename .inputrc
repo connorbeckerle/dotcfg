@@ -8,8 +8,11 @@ set bell-style none
 set editing-mode vi
 set keymap vi
 set keymap vi-insert
-# I don't use this now that I swap caps-escape
-"jk": vi-movement-mode
+
+# someday update bash to 4.3: https://stackoverflow.com/questions/7888387/the-way-to-distinguish-command-mode-and-insert-mode-in-bashs-vi-command-line-ed
+# set show-mode-in-prompt on
+# set vi-ins-mode-string "custom-ins"
+# set vi-cmd-mode-string "custom-cmd"
 
 # change ctrl+backspace to delete prev alphanum word
 # needs to be after vi stuff
